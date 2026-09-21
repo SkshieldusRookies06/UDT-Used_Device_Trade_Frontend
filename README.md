@@ -1,11 +1,24 @@
 # UDT — 프론트엔드
 
 > **이 프로젝트는 리포 2개로 구성됩니다.**
-> 백엔드(메인 리포): [UDT-Used_Device_Trade-backend](https://github.com/<조직>/UDT-Used_Device_Trade-backend) ← 링크를 채워 주세요
+> 백엔드(메인 리포): [UDT-Used_Device_Trade-backend](https://github.com/dong279/UDT-Used_Device_Trade_BackEnd) ← 링크를 채워 주세요
 > **계약 정본 `SPEC.md`와 제출 문서 `docs/`는 백엔드 리포에 있습니다.** 여기에 복사하지 않습니다.
 
 중고 전자기기 안전거래 플랫폼 UDT의 React 프론트엔드.
 SK Shielders Rookies 6기 웹 팀 프로젝트 (7명 · 2주)
+
+> ### 처음 팀 프로젝트를 한다면 여기부터
+>
+> **백엔드 리포의 `docs/참고/전체로드맵.md`** — D1부터 제출까지 10일이 날짜별로,
+> "오늘 누가 무엇을 하고, 끝났는지 어떻게 확인하는가"까지 적혀 있다.
+> 형제 폴더로 클론했다면 [`../UDT-Used_Device_Trade-backend/docs/참고/전체로드맵.md`](../UDT-Used_Device_Trade-backend/docs/참고/전체로드맵.md).
+> 티켓(`tasks/`)이 **어떻게**라면, 로드맵은 **언제·어떤 순서로·지금 어디쯤인지**다.
+>
+> ### 내 역할 한 장 (1인 1파일 — 자기 것만 읽으면 된다)
+>
+> [`FE-A`](onboarding/역할별/FE-A.md) 공통 구조·인증 화면 ·
+> [`FE-B`](onboarding/역할별/FE-B.md) 상품 화면 ·
+> [`FE-C`](onboarding/역할별/FE-C.md) 마이페이지·거래 화면
 
 ---
 
@@ -19,6 +32,26 @@ SK Shielders Rookies 6기 웹 팀 프로젝트 (7명 · 2주)
 
 `npm run gate`와 `npm run mock`이 `../UDT-Used_Device_Trade-backend`를 찾는다.
 다른 곳에 뒀으면 `BACKEND_REPO=<경로> npm run gate`.
+
+## 무엇을 언제 하나
+
+| 보는 것                                                                   | 문서                                  |
+| ------------------------------------------------------------------------- | ------------------------------------- |
+| **10일 전체 순서 · 날짜별 배정 · 저녁 체크포인트**                        | 백엔드 리포 `docs/참고/전체로드맵.md` |
+| **내 역할만 — 소유 파일 · 내 티켓을 단계별로 어떻게 · 내 함정 · 내 발표** | `onboarding/역할별/FE-*.md`           |
+| 지금 잡을 티켓 (수용 기준까지)                                            | [`tasks/README.md`](tasks/README.md)  |
+
+아래는 D1 요약이고, D2 이후는 로드맵에 있다.
+
+| 담당 | D1 티켓                                                |
+| ---- | ------------------------------------------------------ |
+| FE-A | T-011 기동 확인·공용 구조 점검 → T-012 로그인·회원가입 |
+| FE-B | T-013 상품 목록 마감                                   |
+| FE-C | T-016 마이페이지 4탭                                   |
+
+**백엔드를 기다리지 않는다** — `npm run mock` 으로 계약대로 응답이 온다.
+
+---
 
 ## 실행
 
@@ -44,7 +77,7 @@ UDT-Used_Device_Trade-frontend/
 │   ├── gate.mjs              백엔드 리포의 게이트를 실행하는 런처 (검사 로직은 복사하지 않는다)
 │   └── smoke.md              프론트 사람 게이트 — 이 파일의 정본은 여기다
 ├── tasks/                    fe-* 티켓
-├── onboarding/               팀원용 한 장 · frontend.md
+├── onboarding/               팀원용 한 장 · frontend.md · 역할별/FE-A~C.md
 └── src/
     ├── App.jsx               라우트 등록 + errorElement + path="*"       공용 FE-A
     ├── routes.js             경로 문자열은 여기서만 나온다                공용 FE-A
@@ -80,7 +113,7 @@ grep -rnE '(color|background)[^:]*:[^;]*#[0-9a-fA-F]{3,8}' src --include='*.modu
 - 검색어·카테고리·페이지는 **URL 쿼리**. Zustand는 `authStore`·`wishStore` 두 개만
 - 색·간격은 `styles/tokens.css`의 `var(--...)`만
 - 화면마다 네 상태(로딩·정상·**빈 결과**·에러)를 전부 만든다 — **빈 결과는 버그가 아니라 정상 상태다**
-- 컴포넌트 파일마다 `propTypes`
+- props를 받는 컴포넌트마다 `propTypes` (props 없는 페이지 컴포넌트는 제외)
 
 ## 브랜치·커밋
 
@@ -99,11 +132,11 @@ main                정본
 
 ## 아직 비어 있는 것
 
-| 오너 | 채울 것 |
-|---|---|
+| 오너 | 채울 것                                                  |
+| ---- | -------------------------------------------------------- |
 | FE-A | 로그인·회원가입 화면 · 반응형 3뷰포트(390·768·1280) 마감 |
-| FE-B | 상품 상세·등록 화면 (이미지 다중 업로드 미리보기) |
-| FE-C | 마이페이지 3탭 · 거래 상세(상태별 액션·분쟁 신고 폼) |
+| FE-B | 상품 상세·등록 화면 (이미지 다중 업로드 미리보기)        |
+| FE-C | 마이페이지 4탭 · 거래 상세(상태별 액션·분쟁 신고 폼)     |
 
 > **`pages/ProductListPage/`가 참고 구현이다** — 네 상태·검색·페이징이 모두 들어 있다.
 > 나머지 화면은 이 구조를 따라 만든다.

@@ -13,7 +13,7 @@ client.interceptors.request.use((config) => {
 });
 
 client.interceptors.response.use(
-  (res) => res.data?.data,
+  (res) => (res.config?.responseType === "blob" ? res.data : res.data?.data),
   (error) => {
     const url = error.config?.url ?? "";
     const body = error.response?.data;

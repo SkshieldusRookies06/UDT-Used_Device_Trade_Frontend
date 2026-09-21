@@ -6,8 +6,8 @@
 ## 기계 (먼저 · 실패하면 아래를 안 본다)
 
 ```
-cd frontend && npm run build          → 에러 0
-cd frontend && npm run preview        → D4·D8은 dev가 아니라 빌드물에서 본다
+npm run build          → 에러 0   (프론트 리포 루트에서)
+npm run preview        → D4·D8은 dev가 아니라 빌드물에서 본다
 ```
 
 **콘솔 에러 0의 정의:** Uncaught 예외 · 실패한 요청(빨간 4xx/5xx·CORS) 0.
@@ -23,7 +23,7 @@ React 개발 경고(`unique "key" prop`)는 세지 않는다.
 | 4 | **에러** — 에러 문구 + 재시도 버튼이 뜬다 (흰 화면 아님) | DevTools Network → `Offline` 체크 후 재시도 |
 | 5 | **반응형** — 390px에서 목록이 1열, 가로 스크롤 0 | DevTools 기기 툴바 → 390 · 768 · 1280 |
 
-## 관리자 (Thymeleaf · BE-C 담당 · D6부터)
+## 관리자 (Thymeleaf · BE-B 담당 · D6부터)
 
 | # | 확인 | 트리거 |
 |---|---|---|

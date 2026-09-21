@@ -7,7 +7,6 @@ const LABELS = {
   IN_TRADE: "거래중",
   SOLD: "거래완료",
   REJECTED: "반려",
-  SUSPENDED: "판매중지",
   PAID: "결제완료",
   SHIPPING: "배송중",
   CONFIRMED: "구매확정",

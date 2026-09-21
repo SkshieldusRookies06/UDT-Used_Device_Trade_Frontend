@@ -9,6 +9,16 @@
 
 ## 0회차 (첫날 한 번만)
 
+**OS별로 한 번씩 걸리는 것**
+
+| | Windows | macOS / Linux |
+|---|---|---|
+| Node 버전 | `node -v` → **18 이상** (Vite 6). 낮으면 nvm-windows로 LTS | `node -v` → 18 이상. 낮으면 `nvm install --lts` |
+| `npm ci` 가 느리다·멈춘 듯 | 첫 설치는 1~3분. **백신이 node_modules를 스캔**하면 더 걸린다 | 첫 설치 1~2분 |
+| 5173 잡은 프로세스 | `netstat -ano \| findstr :5173` → `taskkill /PID <pid> /F` | `lsof -ti :5173 \| xargs kill` |
+| 줄바꿈 | `.gitattributes`가 LF 고정. CRLF로 저장되면 diff가 전부 빨개진다 | — |
+
+
 ```
 전제: Node LTS 설치 (확인: node -v)
 cd <작업폴더>
@@ -82,7 +92,7 @@ cp .env.example .env                 ← .env 안에 한 줄: VITE_API_URL=http:
 | 401 뒤 화면이 멈춘다 | 토큰 만료. SPEC §3.4 — 인터셉터가 authStore 비우고 `/login`으로 |
 | 로그인 실패했는데 로그인 화면으로 계속 튕긴다 | `/api/auth/**`를 401 인터셉터에서 제외하지 않았다 (SPEC §0 API 호출 행) |
 
-**30분 넘으면 `<프론트 오너 이름>`에게 말한다. 규약 4번이고, 감점이 아니다.**
+**30분 넘으면 `<프론트 오너 이름>`에게 말한다. 규약 4번이고, 잘못이 아니다.**
 
 ## 용어 여섯
 

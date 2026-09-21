@@ -13,7 +13,7 @@
 - 경로 문자열은 `src/routes.js` 상수에서만 나온다
 - 색·간격은 `styles/tokens.css`의 `var(--...)`만. 전역 CSS는 `styles/` 두 파일뿐
 - 화면마다 네 상태(로딩·정상·빈 결과·에러)를 전부 만든다
-- 컴포넌트 파일마다 `propTypes`
+- props를 받는 컴포넌트마다 `propTypes` (props 없는 페이지 컴포넌트는 제외)
 
 ## 명령
 ```
