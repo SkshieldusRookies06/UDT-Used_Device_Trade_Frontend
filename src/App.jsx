@@ -20,7 +20,11 @@ export const router = createBrowserRouter([
       { path: ROUTES.PRODUCT_LIST, element: <ProductListPage /> },
       { path: PATTERNS.PRODUCT_DETAIL, element: <ProductDetailPage /> },
       { path: ROUTES.PRODUCT_NEW, element: <RequireAuth><ProductNewPage /></RequireAuth> },
+<<<<<<< HEAD
       { path: ROUTES.MYPAGE, element: <RequireAuth><MyPage /></RequireAuth> },
+=======
+      { path: ROUTES.MYPAGE, element: <MyPage /> },
+>>>>>>> f8370d6 (T-016 — 마이페이지 4탭 구현)
       { path: PATTERNS.TRANSACTION_DETAIL, element: <RequireAuth><TransactionDetailPage /></RequireAuth> },
       { path: ROUTES.LOGIN, element: <LoginPage /> },
       { path: ROUTES.SIGNUP, element: <SignupPage /> },

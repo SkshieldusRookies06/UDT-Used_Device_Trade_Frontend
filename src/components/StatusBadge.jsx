@@ -7,6 +7,10 @@ const LABELS = {
   IN_TRADE: "거래중",
   SOLD: "거래완료",
   REJECTED: "반려",
+<<<<<<< HEAD
+=======
+  SUSPENDED: "판매중지",
+>>>>>>> f8370d6 (T-016 — 마이페이지 4탭 구현)
   PAID: "결제완료",
   SHIPPING: "배송중",
   CONFIRMED: "구매확정",

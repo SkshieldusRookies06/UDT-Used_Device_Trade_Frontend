@@ -13,7 +13,11 @@
 - 경로 문자열은 `src/routes.js` 상수에서만 나온다
 - 색·간격은 `styles/tokens.css`의 `var(--...)`만. 전역 CSS는 `styles/` 두 파일뿐
 - 화면마다 네 상태(로딩·정상·빈 결과·에러)를 전부 만든다
+<<<<<<< HEAD
 - props를 받는 컴포넌트마다 `propTypes` (props 없는 페이지 컴포넌트는 제외)
+=======
+- 컴포넌트 파일마다 `propTypes`
+>>>>>>> f8370d6 (T-016 — 마이페이지 4탭 구현)
 
 ## 명령
 ```
@@ -22,7 +26,11 @@
 미리보기  npm run preview
 게이트    npm run gate         (백엔드 리포의 check-api.mjs 를 실행)
 목 서버   npm run mock         (백엔드 리포의 mock/server.mjs 를 실행)
+<<<<<<< HEAD
 커밋      feat|fix|docs|refactor|chore|test(<범위>): 한 줄 [T-###]   (규약: 백엔드 리포 docs/참고/GitHub규약.md)
+=======
+커밋      feat|fix|docs|chore(<범위>): 한 줄 [T-###]
+>>>>>>> f8370d6 (T-016 — 마이페이지 4탭 구현)
 ```
 
 ## 금지

@@ -7,6 +7,7 @@
 중고 전자기기 안전거래 플랫폼 UDT의 React 프론트엔드.
 SK Shielders Rookies 6기 웹 팀 프로젝트 (7명 · 2주)
 
+<<<<<<< HEAD
 > ### 처음 팀 프로젝트를 한다면 여기부터
 > **백엔드 리포의 `docs/참고/전체로드맵.md`** — D1부터 제출까지 10일이 날짜별로,
 > "오늘 누가 무엇을 하고, 끝났는지 어떻게 확인하는가"까지 적혀 있다.
@@ -18,6 +19,8 @@ SK Shielders Rookies 6기 웹 팀 프로젝트 (7명 · 2주)
 > [`FE-B`](onboarding/역할별/FE-B.md) 상품 화면 ·
 > [`FE-C`](onboarding/역할별/FE-C.md) 마이페이지·거래 화면
 
+=======
+>>>>>>> f8370d6 (T-016 — 마이페이지 4탭 구현)
 ---
 
 ## 클론 위치가 계약이다 (SPEC.md §12)
@@ -31,6 +34,7 @@ SK Shielders Rookies 6기 웹 팀 프로젝트 (7명 · 2주)
 `npm run gate`와 `npm run mock`이 `../UDT-Used_Device_Trade-backend`를 찾는다.
 다른 곳에 뒀으면 `BACKEND_REPO=<경로> npm run gate`.
 
+<<<<<<< HEAD
 ## 무엇을 언제 하나
 
 | 보는 것 | 문서 |
@@ -51,6 +55,8 @@ SK Shielders Rookies 6기 웹 팀 프로젝트 (7명 · 2주)
 
 ---
 
+=======
+>>>>>>> f8370d6 (T-016 — 마이페이지 4탭 구현)
 ## 실행
 
 ```bash
@@ -75,7 +81,11 @@ UDT-Used_Device_Trade-frontend/
 │   ├── gate.mjs              백엔드 리포의 게이트를 실행하는 런처 (검사 로직은 복사하지 않는다)
 │   └── smoke.md              프론트 사람 게이트 — 이 파일의 정본은 여기다
 ├── tasks/                    fe-* 티켓
+<<<<<<< HEAD
 ├── onboarding/               팀원용 한 장 · frontend.md · 역할별/FE-A~C.md
+=======
+├── onboarding/               팀원용 한 장 · frontend.md
+>>>>>>> f8370d6 (T-016 — 마이페이지 4탭 구현)
 └── src/
     ├── App.jsx               라우트 등록 + errorElement + path="*"       공용 FE-A
     ├── routes.js             경로 문자열은 여기서만 나온다                공용 FE-A
@@ -111,7 +121,11 @@ grep -rnE '(color|background)[^:]*:[^;]*#[0-9a-fA-F]{3,8}' src --include='*.modu
 - 검색어·카테고리·페이지는 **URL 쿼리**. Zustand는 `authStore`·`wishStore` 두 개만
 - 색·간격은 `styles/tokens.css`의 `var(--...)`만
 - 화면마다 네 상태(로딩·정상·**빈 결과**·에러)를 전부 만든다 — **빈 결과는 버그가 아니라 정상 상태다**
+<<<<<<< HEAD
 - props를 받는 컴포넌트마다 `propTypes` (props 없는 페이지 컴포넌트는 제외)
+=======
+- 컴포넌트 파일마다 `propTypes`
+>>>>>>> f8370d6 (T-016 — 마이페이지 4탭 구현)
 
 ## 브랜치·커밋
 
@@ -126,9 +140,12 @@ main                정본
 **계약이 바뀌면 백엔드 리포가 먼저 머지된다.** 아침마다 백엔드 리포도 `git pull` 한다.
 **일지(`worklog/`)는 백엔드 리포에 쓴다** — 전원이 한 곳 (SPEC.md §12).
 
+<<<<<<< HEAD
 > 위는 요약이다. 전체 규칙(PR 템플릿 · 머지 · 충돌 · 계약 변경 짝 맞추기)은 백엔드 리포
 > [`docs/참고/GitHub규약.md`](../UDT-Used_Device_Trade-backend/docs/참고/GitHub규약.md) — 두 리포 공통.
 
+=======
+>>>>>>> f8370d6 (T-016 — 마이페이지 4탭 구현)
 ---
 
 ## 아직 비어 있는 것
@@ -137,7 +154,11 @@ main                정본
 |---|---|
 | FE-A | 로그인·회원가입 화면 · 반응형 3뷰포트(390·768·1280) 마감 |
 | FE-B | 상품 상세·등록 화면 (이미지 다중 업로드 미리보기) |
+<<<<<<< HEAD
 | FE-C | 마이페이지 4탭 · 거래 상세(상태별 액션·분쟁 신고 폼) |
+=======
+| FE-C | 마이페이지 3탭 · 거래 상세(상태별 액션·분쟁 신고 폼) |
+>>>>>>> f8370d6 (T-016 — 마이페이지 4탭 구현)
 
 > **`pages/ProductListPage/`가 참고 구현이다** — 네 상태·검색·페이징이 모두 들어 있다.
 > 나머지 화면은 이 구조를 따라 만든다.

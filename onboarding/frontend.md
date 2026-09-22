@@ -9,6 +9,7 @@
 
 ## 0회차 (첫날 한 번만)
 
+<<<<<<< HEAD
 **OS별로 한 번씩 걸리는 것**
 
 | | Windows | macOS / Linux |
@@ -19,6 +20,8 @@
 | 줄바꿈 | `.gitattributes`가 LF 고정. CRLF로 저장되면 diff가 전부 빨개진다 | — |
 
 
+=======
+>>>>>>> f8370d6 (T-016 — 마이페이지 4탭 구현)
 ```
 전제: Node LTS 설치 (확인: node -v)
 cd <작업폴더>
@@ -33,7 +36,11 @@ cp .env.example .env                 ← .env 안에 한 줄: VITE_API_URL=http:
 
 ```
 1) 터미널 1 — 백엔드 기동
+<<<<<<< HEAD
    (백엔드 리포를 IntelliJ로 열고 UdtApplication ▶ · Active profiles: local)
+=======
+   (cd ../UDT-Used_Device_Trade-backend && ./mvnw spring-boot:run -Dspring-boot.run.profiles=local)
+>>>>>>> f8370d6 (T-016 — 마이페이지 4탭 구현)
    Spring이 아직 안 섰으면 D1 땜빵:  npm run mock
    확인: npm run gate  → 마지막 줄 "OK: http://localhost:8080 계약 준수"
 
@@ -92,7 +99,11 @@ cp .env.example .env                 ← .env 안에 한 줄: VITE_API_URL=http:
 | 401 뒤 화면이 멈춘다 | 토큰 만료. SPEC §3.4 — 인터셉터가 authStore 비우고 `/login`으로 |
 | 로그인 실패했는데 로그인 화면으로 계속 튕긴다 | `/api/auth/**`를 401 인터셉터에서 제외하지 않았다 (SPEC §0 API 호출 행) |
 
+<<<<<<< HEAD
 **30분 넘으면 `<프론트 오너 이름>`에게 말한다. 규약 4번이고, 잘못이 아니다.**
+=======
+**30분 넘으면 `<프론트 오너 이름>`에게 말한다. 규약 4번이고, 감점이 아니다.**
+>>>>>>> f8370d6 (T-016 — 마이페이지 4탭 구현)
 
 ## 용어 여섯
 

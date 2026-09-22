@@ -13,6 +13,7 @@ export const openDispute = (id, reason, files) => {
   return client.post(`/api/transactions/${id}/disputes`, form);
 };
 
+<<<<<<< HEAD
 export const downloadDisputeFile = async (disputeId, fileId, filename) => {
   const blob = await client.get(`/api/disputes/${disputeId}/files/${fileId}`, { responseType: "blob" });
   const url = URL.createObjectURL(blob);
@@ -22,3 +23,10 @@ export const downloadDisputeFile = async (disputeId, fileId, filename) => {
   a.click();
   URL.revokeObjectURL(url);
 };
+=======
+export const disputeFileUrl = (disputeId, fileId) =>
+  `${import.meta.env.VITE_API_URL}/api/disputes/${disputeId}/files/${fileId}`;
+
+export const fetchMyProducts = (params) => client.get("/api/me/products", { params });
+export const fetchMyWishes = (params) => client.get("/api/me/wishes", { params });
+>>>>>>> f8370d6 (T-016 — 마이페이지 4탭 구현)

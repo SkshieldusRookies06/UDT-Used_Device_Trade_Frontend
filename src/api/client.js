@@ -13,7 +13,11 @@ client.interceptors.request.use((config) => {
 });
 
 client.interceptors.response.use(
+<<<<<<< HEAD
   (res) => (res.config?.responseType === "blob" ? res.data : res.data?.data),
+=======
+  (res) => res.data?.data,
+>>>>>>> f8370d6 (T-016 — 마이페이지 4탭 구현)
   (error) => {
     const url = error.config?.url ?? "";
     const body = error.response?.data;
