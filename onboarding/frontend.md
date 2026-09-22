@@ -33,7 +33,7 @@ cp .env.example .env                 ← .env 안에 한 줄: VITE_API_URL=http:
 
 ```
 1) 터미널 1 — 백엔드 기동
-   (cd ../UDT-Used_Device_Trade-backend && ./mvnw spring-boot:run -Dspring-boot.run.profiles=local)
+   (백엔드 리포를 IntelliJ로 열고 UdtApplication ▶ · Active profiles: local)
    Spring이 아직 안 섰으면 D1 땜빵:  npm run mock
    확인: npm run gate  → 마지막 줄 "OK: http://localhost:8080 계약 준수"
 

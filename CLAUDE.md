@@ -22,7 +22,7 @@
 미리보기  npm run preview
 게이트    npm run gate         (백엔드 리포의 check-api.mjs 를 실행)
 목 서버   npm run mock         (백엔드 리포의 mock/server.mjs 를 실행)
-커밋      feat|fix|docs|chore(<범위>): 한 줄 [T-###]
+커밋      feat|fix|docs|refactor|chore|test(<범위>): 한 줄 [T-###]   (규약: 백엔드 리포 docs/참고/GitHub규약.md)
 ```
 
 ## 금지
