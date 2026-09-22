@@ -111,7 +111,7 @@ npm run mock      # 백엔드 리포의 mock/server.mjs 를 실행한다
 **3) 게이트를 돌린다**
 
 ```bash
-npm run gate      # 9/9 ok
+npm run gate      # 10/10 ok
 ```
 백엔드 리포가 형제 폴더가 아니면 `BACKEND_REPO=<경로> npm run gate`.
 
@@ -259,7 +259,7 @@ npm run mock         # 목 서버 8080 — 계약대로 응답한다
 
 # 내 완료 증명
 npm run build        # 에러 0
-npm run gate         # 9/9 ok
+npm run gate         # 10/10 ok
 
 # 규약 확인 — 전부 무출력이 정상
 grep -rn "axios" src/pages/                       # 컴포넌트에서 직접 호출 금지

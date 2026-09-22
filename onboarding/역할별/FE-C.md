@@ -244,7 +244,7 @@ npm run mock         # 목 서버 8080
 
 # 내 완료 증명
 npm run build        # 에러 0
-npm run gate         # 9/9 ok
+npm run gate         # 10/10 ok
 
 # 규약 확인 — 무출력이 정상
 grep -rn "axios" src/pages/MyPage src/pages/TransactionDetailPage
