@@ -1,31 +1,95 @@
 :root {
-  --color-primary: #2f6df6;
-  --color-primary-dark: #1f4fc4;
+  --color-primary: #7c6ee6;
+  --color-primary-dark: #6a5ddb;
+  --color-primary-hover: #6a5ddb;
+  --color-primary-subtle: #f0ebff;
+  --color-primary-text: #5b4fc8;
   --color-danger: #dc2626;
   --color-warning: #d97706;
   --color-success: #15803d;
-  --color-text: #1f2933;
-  --color-text-muted: #6b7280;
+  --color-text: #111827;
+  --color-text-heading: #34324a;
+  --color-text-muted: #5f6b7c;
   --color-border: #e4e7eb;
   --color-surface: #ffffff;
-  --color-bg: #f5f6f8;
+  --color-bg: #ffffff;
+  --color-background-subtle: #f8f7fc;
   --color-on-primary: #ffffff;
 
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
-  --space-5: 24px;
-  --space-6: 32px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
 
   --radius: 8px;
-  --radius-sm: 4px;
+  --radius-sm: 6px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-pill: 999px;
+
+  --shadow-xs: 0 1px 2px rgba(22, 32, 44, 0.06);
+  --shadow-sm: 0 2px 8px rgba(22, 32, 44, 0.06);
+  --shadow-md: 0 8px 24px rgba(22, 32, 44, 0.1);
+  --shadow-lg: 0 18px 44px rgba(22, 32, 44, 0.18);
 
   --font-sm: 13px;
   --font-base: 15px;
   --font-lg: 18px;
   --font-xl: 24px;
 
+  --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+
+  --text-display-size: 32px;
+  --text-display-weight: 700;
+  --text-display-leading: 1.25;
+  --text-display-tracking: -0.02em;
+
+  --text-page-title-size: 28px;
+  --text-page-title-weight: 700;
+  --text-page-title-leading: 1.35;
+  --text-page-title-tracking: -0.01em;
+
+  --text-section-title-size: 20px;
+  --text-section-title-weight: 700;
+  --text-section-title-leading: 1.4;
+  --text-section-title-tracking: -0.01em;
+
+  --text-card-title-size: 16px;
+  --text-card-title-weight: 700;
+  --text-card-title-leading: 1.45;
+
+  --text-body-size: 14px;
+  --text-body-weight: 400;
+  --text-body-leading: 1.6;
+
+  --text-body-strong-size: 14px;
+  --text-body-strong-weight: 500;
+  --text-body-strong-leading: 1.6;
+
+  --text-caption-size: 12px;
+  --text-caption-weight: 400;
+  --text-caption-leading: 1.5;
+
+  --text-label-size: 12px;
+  --text-label-weight: 500;
+  --text-label-leading: 1.4;
+  --text-label-tracking: 0.01em;
+
+  --text-micro-size: 11px;
+  --text-micro-weight: 400;
+  --text-micro-leading: 1.45;
+
   --breakpoint-tablet: 768px;
   --breakpoint-desktop: 1280px;
+
+  --layout-max: 1200px;
+  --layout-gutter: 40px;
+  --header-height: 72px;
 }
