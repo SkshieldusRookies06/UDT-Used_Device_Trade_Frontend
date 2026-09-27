@@ -8,6 +8,25 @@
 
 ---
 
+## 0. [9/27 개정] 연휴 뒤 첫날 내가 할 것 — FE-B
+
+> **공통 절차 (전원)**
+> 1. `git checkout main && git pull` → 내 브랜치에서 `git merge main`
+> 2. 아래 표대로 고친다 → `npm run build` 에러 0 → 목 서버(`npm run mock`)로 판정 줄을 직접 눌러 확인 → **내 이름으로 커밋** → PR
+> 3. 남의 파일은 안 건드린다. 필요하면 오너에게 요청
+>
+> 근거: 9/27 팀장 점검(프론트 main · 원격 브랜치 전부 빌드 · 백엔드 계약 대조). 프론트 main 코드는 계약과 맞다 — 고칠 것은 티켓 문구와 아래 표뿐이다.
+
+| 순서 | 파일 | 있었던 것 | 바꿀 것 | 왜 |
+|---|---|---|---|---|
+| 1 | `src/pages/ProductNewPage/` (T-015) | 에러 목록에 `FILE_COUNT_EXCEEDED` 없음 | 6장 이상이면 서버 `message`("첨부 가능한 파일 수를 초과했습니다")를 그대로 띄운다. 프론트 사전 안내(6장 선택 시)는 원래대로 | 백엔드 SPEC §4.4에 9/27 추가된 에러코드 |
+| 2 | `src/pages/ProductDetailPage/` (T-014 · 권장) | 헤더 잔액은 로그인 때 값 그대로 | 구매 성공 뒤 `fetchMe()`(api/auth.js) → `useAuthStore.getState().setUser(me)` 후 `/transactions/{id}` 이동 | 시연 ②에서 구매했는데 헤더 잔액이 안 줄어든 것처럼 보인다 |
+| 3 | `src/pages/ProductDetailPage/` (T-014) | — | 상세 응답의 `wished`를 그대로 쓴다(백엔드 BE-C가 9/28에 "로그인 사용자 기준"으로 고친다) · 목 서버에선 이미 동작 | 9/27 전까지 백엔드는 항상 `false`였다 — 실서버에서 안 켜지면 백엔드 쪽 문제 |
+
+**판정:** `npm run build` 에러 0 · 목 서버에서 사진 6장 선택 → 사전 안내 · 구매 → 헤더 잔액이 상품 가격만큼 준다.
+
+---
+
 ## 1. 한 줄로
 
 **사람들이 가장 오래 보는 화면 3장이 내 것이다** — 목록·상세·등록.
@@ -252,7 +271,7 @@ npm run mock         # 목 서버 8080
 
 # 내 완료 증명
 npm run build        # 에러 0
-npm run gate         # 10/10 ok
+npm run gate         # 13/13 ok (목 서버 기준 · 실서버는 BE-B T-005 전 8/13이 정상)
 
 # 규약 확인 — 무출력이 정상
 grep -rn "axios" src/pages/ProductListPage src/pages/ProductDetailPage src/pages/ProductNewPage

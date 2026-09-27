@@ -8,6 +8,35 @@
 
 ---
 
+## 0. [9/27 개정] 연휴 뒤 첫날 내가 할 것 — FE-C · **가장 먼저**
+
+> **공통 절차 (전원)**
+> 1. `git checkout main && git pull` → 내 브랜치에서 `git merge main`
+> 2. 아래 표대로 고친다 → `npm run build` 에러 0 → 목 서버(`npm run mock`)로 판정 줄을 직접 눌러 확인 → **내 이름으로 커밋** → PR
+> 3. 남의 파일은 안 건드린다. 필요하면 오너에게 요청
+>
+> 근거: 9/27 팀장 점검(프론트 main · 원격 브랜치 전부 빌드 · 백엔드 계약 대조). 프론트 main 코드는 계약과 맞다 — 고칠 것은 티켓 문구와 아래 표뿐이다.
+
+**`sheok13` 브랜치(9/22 · T-016 마이페이지)는 지금 빌드가 안 된다** — `npm run build` → `src/App.jsx:23 Unexpected "<<"`. 머지 충돌 표시(`<<<<<<<`)가 **10개 파일**에 그대로 커밋됐다.
+**권장 절차:** main에서 `git checkout -b fe-mypage` 새로 만들고 → `pages/MyPage/`만 다시 옮겨 온다(`git checkout origin/sheok13 -- src/pages/MyPage/` 후 충돌 표시 정리) → 아래 표대로 고친다. `sheok13`은 PR 없이 닫는다.
+
+| 순서 | 파일 | 있었던 것 | 바꿀 것 | 왜 |
+|---|---|---|---|---|
+| 1 | 10개 파일 | `<<<<<<< HEAD` … `>>>>>>> f8370d6` | 위 절차로 **`pages/MyPage/`만** 가져온다. 공용 파일은 main 그대로 | 빌드 실패 · CI 빨강 |
+| 2 | `pages/MyPage/index.jsx` | `.then((res) => setData(res.data))` | `setData(res)` | 인터셉터가 봉투를 벗겨 `data`를 바로 준다 — `res.data`는 `undefined` → 늘 빈 화면 |
+| 3 | 〃 | 거래 탭도 `<ProductCard product={item.product \|\| item} />` | 판매·구매 탭은 **거래 한 줄**: `productTitle` · `amountKrw.toLocaleString()`원 · `<StatusBadge>` · 상대 닉네임(판매 탭이면 `buyerNickname`, 구매 탭이면 `sellerNickname`) · 누르면 `/transactions/{id}` | 거래 객체엔 `title`·`priceKrw`가 없다 → `ProductCard`에서 `priceKrw.toLocaleString()` **예외로 화면이 죽는다**. `ProductCard`는 내 상품·찜 탭에만 |
+| 4 | 〃 | 잔액 표시 없음 | 상단에 `fetchMe()` 결과의 `balanceKrw` 천 단위 | T-016 수용 기준 |
+| 5 | 〃 | 빈 결과 문구 하나 | 탭별 문구("아직 등록한 상품이 없습니다" · "판매 내역이 없습니다" · "구매 내역이 없습니다" · "찜한 상품이 없습니다") | T-016 수용 기준 |
+| 6 | `pages/MyPage/MyPage.module.css` | `.wrapper`만 있음 | 코드가 쓰는 `heading`·`search`(탭 줄)·`grid`·`state`를 정의(색은 토큰만) — `ProductListPage.module.css`를 참고 | 지금은 클래스가 `undefined`라 스타일이 안 먹는다 |
+| 7 | `api/transactions.js` (내 파일) | `disputeFileUrl()`(토큰 없는 URL) · `fetchMyProducts`·`fetchMyWishes` 중복 | **추가하지 않는다** — 다운로드는 main의 `downloadDisputeFile()`, 목록은 `api/products.js`의 것을 import | `<a href>`로는 JWT가 안 실려 401 · 같은 함수 두 벌 |
+| 8 | `client.js` · `App.jsx` · `StatusBadge.jsx` · README · CLAUDE.md · 온보딩 · `seams/smoke.md` | `sheok13`이 수정 | **안 건드린다**(main 그대로) | 공용 파일(FE-A·팀장). 충돌을 내 쪽으로 풀면서 마이페이지 `RequireAuth`·blob 예외가 빠지고 SPEC 밖 `SUSPENDED`가 들어갔다 |
+
+**T-017(거래 상세) 알아 둘 것:** 응답에 `productTitle`·`buyerNickname`·`sellerNickname`, 그리고 **`dispute` 키**(없으면 `null` · 있으면 사유·증빙 파일 목록)가 온다 — 분쟁 행은 이걸로 그린다. 티켓 [배경]에 추가해 뒀다.
+
+**판정:** `npm run build` 에러 0 · `git grep -n "<<<<<<<"` 무출력 · 목 서버에서 `/mypage?tab=products|selling|buying|wishes` 네 개를 직접 열어 전부 그려지고, 판매·구매 항목을 누르면 거래 상세로 간다 · 새로고침해도 같은 탭.
+
+---
+
 ## 1. 한 줄로
 
 **거래 상세(SCR-005)가 이 서비스의 중심 화면이다.** 상태에 따라 버튼이 달라지는 화면 — 에스크로가 눈에 보이는 유일한 곳이 여기다.
@@ -244,7 +273,7 @@ npm run mock         # 목 서버 8080
 
 # 내 완료 증명
 npm run build        # 에러 0
-npm run gate         # 10/10 ok
+npm run gate         # 13/13 ok (목 서버 기준 · 실서버는 BE-B T-005 전 8/13이 정상)
 
 # 규약 확인 — 무출력이 정상
 grep -rn "axios" src/pages/MyPage src/pages/TransactionDetailPage

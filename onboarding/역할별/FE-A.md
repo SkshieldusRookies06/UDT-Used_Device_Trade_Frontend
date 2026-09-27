@@ -8,6 +8,25 @@
 
 ---
 
+## 0. [9/27 개정] 연휴 뒤 첫날 내가 할 것 — FE-A
+
+> **공통 절차 (전원)**
+> 1. `git checkout main && git pull` → 내 브랜치에서 `git merge main`
+> 2. 아래 표대로 고친다 → `npm run build` 에러 0 → 목 서버(`npm run mock`)로 판정 줄을 직접 눌러 확인 → **내 이름으로 커밋** → PR
+> 3. 남의 파일은 안 건드린다. 필요하면 오너에게 요청
+>
+> 근거: 9/27 팀장 점검(프론트 main · 원격 브랜치 전부 빌드 · 백엔드 계약 대조). 프론트 main 코드는 계약과 맞다 — 고칠 것은 티켓 문구와 아래 표뿐이다.
+
+| 순서 | 파일 | 있었던 것 | 바꿀 것 | 왜 |
+|---|---|---|---|---|
+| 1 | `src/api/client.js` | 401이면 `window.location.assign("/login")` | `"/login?reason=expired"`로 **한 줄만** 바꾼다. 봉투 벗기기·blob 예외·`/api/auth/**` 제외는 그대로 | SPEC §3.4 "다시 로그인해 주세요"를 띄울 신호가 없었다. T-012가 "인터셉터는 건드리지 말라"면서 이 신호를 읽으라고 해 서로 모순이었다(티켓 고침) |
+| 2 | `src/pages/LoginPage/` | (T-012 작업) | `useSearchParams`로 `reason=expired`면 폼 위에 "다시 로그인해 주세요" | T-012 수용 기준에 한 줄 추가됨 |
+| 3 | (리뷰) FE-C 마이페이지 PR | — | `client.js`·`App.jsx`·`StatusBadge.jsx` 변경이 **없는지** 확인 | `sheok13` 브랜치가 충돌을 풀면서 이 세 파일을 되돌려 놓았다(마이페이지 `RequireAuth` 빠짐 · blob 예외 빠짐 · SPEC 밖 `SUSPENDED`) — 공용 파일 오너가 막는다 |
+
+**판정:** `npm run build` 에러 0 · DevTools → Application → Local Storage `udt-auth`의 `accessToken`을 아무 문자로 바꾸고 `/mypage` 새로고침 → `/login?reason=expired`로 이동하고 안내가 뜬다(실서버 · T-005 뒤).
+
+---
+
 ## 1. 한 줄로
 
 **내가 만든 바닥 위에서 FE-B·FE-C가 화면을 그린다.** 라우팅·axios 인스턴스·인터셉터·스토어·토큰·공용 컴포넌트가 내 것이다.
@@ -111,7 +130,7 @@ npm run mock      # 백엔드 리포의 mock/server.mjs 를 실행한다
 **3) 게이트를 돌린다**
 
 ```bash
-npm run gate      # 10/10 ok
+npm run gate      # 13/13 ok (목 서버 기준 · 실서버는 BE-B T-005 전 8/13이 정상)
 ```
 백엔드 리포가 형제 폴더가 아니면 `BACKEND_REPO=<경로> npm run gate`.
 
@@ -259,7 +278,7 @@ npm run mock         # 목 서버 8080 — 계약대로 응답한다
 
 # 내 완료 증명
 npm run build        # 에러 0
-npm run gate         # 10/10 ok
+npm run gate         # 13/13 ok (목 서버 기준 · 실서버는 BE-B T-005 전 8/13이 정상)
 
 # 규약 확인 — 전부 무출력이 정상
 grep -rn "axios" src/pages/                       # 컴포넌트에서 직접 호출 금지
