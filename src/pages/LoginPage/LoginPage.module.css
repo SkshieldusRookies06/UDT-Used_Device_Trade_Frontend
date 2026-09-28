@@ -84,6 +84,17 @@
 
 .errorIcon { font-weight: var(--text-section-title-weight); }
 
+.notice {
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-primary-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--color-primary-text);
+  font-size: var(--text-caption-size);
+  font-weight: var(--text-label-weight);
+  line-height: var(--text-caption-leading);
+}
+
 .switch {
   display: flex;
   justify-content: center;

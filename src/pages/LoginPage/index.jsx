@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { login } from "../../api/auth.js";
 import { useAuthStore } from "../../store/authStore.js";
 import Button from "../../components/Button.jsx";
@@ -9,6 +9,8 @@ import styles from "./LoginPage.module.css";
 export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const expired = searchParams.get("reason") === "expired";
   const setAuth = useAuthStore((s) => s.setAuth);
 
   const [email, setEmail] = useState("");
@@ -36,6 +38,10 @@ export default function LoginPage() {
       <div className={styles.card}>
         <h1 className={styles.title}>로그인</h1>
         <p className={styles.subtitle}>검수와 안전거래를 거치는 중고 전자기기 거래</p>
+
+        {expired && (
+          <p className={styles.notice} role="status">다시 로그인해 주세요</p>
+        )}
 
         <form className={styles.form} onSubmit={submit}>
           <label className={styles.field}>
