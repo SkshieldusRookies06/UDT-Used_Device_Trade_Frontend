@@ -35,34 +35,13 @@
 .brand {
   display: flex;
   align-items: center;
-  gap: 9px;
-  color: inherit;
+  flex: none;
 }
 
-.mark {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  border-radius: var(--radius);
-  background: var(--color-primary);
-  color: var(--color-on-primary);
-  font-size: 15px;
-  font-weight: 700;
-}
-
-.wordmark { display: flex; flex-direction: column; }
-
-.logo {
-  font-size: var(--font-lg);
-  font-weight: 700;
-  color: var(--color-text-heading);
-}
-
-.tagline {
-  font-size: 8px;
-  color: var(--color-text-tertiary);
+.brandLogo {
+  height: 56px;
+  width: auto;
+  object-fit: contain;
 }
 
 .nav {
@@ -71,22 +50,6 @@
   gap: 10px;
   margin-left: auto;
 }
-
-.searchEntry {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius);
-  color: var(--color-text-heading);
-  font-size: 17px;
-  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
-}
-
-.searchEntry:hover { background: var(--color-background-subtle); }
 
 .navLink {
   font-size: var(--font-sm);
@@ -125,6 +88,26 @@
 }
 
 .ctaPrimary:hover { background: var(--color-primary-hover); }
+
+.userInfo {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding-left: var(--space-3);
+  border-left: 1px solid var(--color-border-strong);
+  font-size: var(--font-sm);
+  white-space: nowrap;
+}
+
+.nickname {
+  color: var(--color-text-heading);
+  font-weight: var(--text-body-strong-weight);
+}
+
+.balance {
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
 
 .linkButton {
   background: none;

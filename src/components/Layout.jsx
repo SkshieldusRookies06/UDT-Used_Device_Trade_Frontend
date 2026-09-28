@@ -1,10 +1,14 @@
 import { Link, Outlet } from "react-router-dom";
 import { ROUTES } from "../routes.js";
 import { useAuthStore } from "../store/authStore.js";
+import logo from "../assets/logo/udt-logo.png";
 import styles from "./Layout.module.css";
+
+const krw = new Intl.NumberFormat("ko-KR");
 
 export default function Layout() {
   const accessToken = useAuthStore((s) => s.accessToken);
+  const user = useAuthStore((s) => s.user);
   const clear = useAuthStore((s) => s.clear);
   const isMember = Boolean(accessToken);
 
@@ -13,22 +17,24 @@ export default function Layout() {
       <header className={styles.header}>
         <div className={styles.headerInner}>
           <Link to={ROUTES.HOME} className={styles.brand}>
-            <span className={styles.mark} aria-hidden="true">U</span>
-            <span className={styles.wordmark}>
-              <span className={styles.logo}>UDT</span>
-              <span className={styles.tagline}>Used Device Safe Trade</span>
-            </span>
+            <img src={logo} alt="UDT — Used Device Safe Trade" className={styles.brandLogo} />
           </Link>
 
           <nav className={styles.nav}>
-            <Link to={ROUTES.HOME} className={styles.searchEntry} aria-label="검색">
-              <span aria-hidden="true">⌕</span>
-            </Link>
-
             {isMember ? (
               <>
                 <Link to={ROUTES.PRODUCT_NEW} className={styles.ctaSecondary}>상품 등록</Link>
                 <Link to={ROUTES.MYPAGE} className={styles.navLink}>마이페이지</Link>
+                {user && (
+                  <span className={styles.userInfo}>
+                    <span className={styles.nickname}>{user.nickname}</span>
+                    {user.balanceKrw != null && (
+                      <span className={styles.balance}>
+                        잔액 {krw.format(user.balanceKrw)}원
+                      </span>
+                    )}
+                  </span>
+                )}
                 <button type="button" className={styles.linkButton} onClick={clear}>로그아웃</button>
               </>
             ) : (
