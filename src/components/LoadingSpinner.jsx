@@ -1,14 +1,21 @@
 import PropTypes from "prop-types";
 import styles from "./LoadingSpinner.module.css";
 
-export default function LoadingSpinner({ label }) {
+export default function LoadingSpinner({ size, label }) {
   return (
-    <div className={styles.wrapper} role="status" aria-live="polite">
-      <span className={styles.spinner} />
+    <span className={`${styles.wrapper} ${styles[size]}`} role="status" aria-live="polite">
+      <span className={styles.spinner} aria-hidden="true" />
       <span className={styles.label}>{label}</span>
-    </div>
+    </span>
   );
 }
 
-LoadingSpinner.propTypes = { label: PropTypes.string };
-LoadingSpinner.defaultProps = { label: "불러오는 중…" };
+LoadingSpinner.propTypes = {
+  size: PropTypes.oneOf(["sm", "md"]),
+  label: PropTypes.string,
+};
+
+LoadingSpinner.defaultProps = {
+  size: "md",
+  label: "불러오는 중…",
+};

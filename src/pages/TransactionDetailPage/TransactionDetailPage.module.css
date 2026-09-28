@@ -1,2 +1,37 @@
-.wrapper { background: var(--color-surface); border: 1px solid var(--color-border);
-  border-radius: var(--radius); padding: var(--space-5); color: var(--color-text-muted); }
+.wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.heading {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.infoBox {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.statusBadge {
+  color: #0056b3;
+  font-weight: bold;
+}
+
+.actionGroup {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.state {
+  text-align: center;
+  padding: 40px;
+  color: #6c757d;
+}

@@ -1,23 +1,12 @@
 import styles from "./MyPage.module.css";
-<<<<<<< HEAD
-
-export default function MyPage() {
-  return (
-    <section className={styles.wrapper}>
-      <h1>마이페이지 (SCR-004)</h1>
-      <p>담당: FE-C · 계약: SPEC.md §4.9</p>
-      <p>구현 전 단계. 네 상태(로딩·정상·빈 결과·에러)를 먼저 만든다 — SPEC.md §3.3</p>
-    </section>
-  );
-}
-=======
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 
 import { 
-fetchMyTransactions, 
-fetchMyProducts, 
-fetchMyWishes } from "../../api/transactions.js";
+  fetchMyTransactions, 
+  fetchMyProducts, 
+  fetchMyWishes 
+} from "../../api/transactions.js";
 
 import ProductCard from "../../components/ProductCard.jsx";
 import StatusBadge from "../../components/StatusBadge.jsx";
@@ -50,9 +39,9 @@ export default function MyPage() {
     setSearchParams({ tab: newTab, page: "0" });
   };
 
- useEffect(() => {
+  useEffect(() => {
     let alive = true;
-    setLoading(true);
+    setLoading(true)
     setError(null);
 
     const fetchMyPageData = async () => {
@@ -104,7 +93,7 @@ export default function MyPage() {
         </div>
       )}
 
-      {!loading && !error && data?.content.length > 0 && (
+      {!loading && !error && data?.content?.length > 0 && (
         <>
           <ul className={styles.grid}>
             {data.content.map((item) => (
@@ -133,4 +122,3 @@ export default function MyPage() {
     </section>
   );
 }
->>>>>>> f8370d6 (T-016 — 마이페이지 4탭 구현)
