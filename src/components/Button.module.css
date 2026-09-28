@@ -44,6 +44,12 @@
 
 .primary.loading { background: var(--color-primary-hover); }
 
-.marker { animation: spin 1s linear infinite; }
+.primary.loading,
+.danger.loading {
+  --spinner-track: color-mix(in srgb, var(--color-on-primary) 35%, transparent);
+  --spinner-head: var(--color-on-primary);
+}
 
-@keyframes spin { to { transform: rotate(360deg); } }
+.ghost.loading {
+  --spinner-track: color-mix(in srgb, var(--color-primary) 30%, transparent);
+}

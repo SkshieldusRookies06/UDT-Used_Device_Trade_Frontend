@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import LoadingSpinner from "./LoadingSpinner.jsx";
 import styles from "./Button.module.css";
 
 export default function Button({ children, variant, size, type, disabled, loading, onClick }) {
@@ -14,11 +15,7 @@ export default function Button({ children, variant, size, type, disabled, loadin
       aria-busy={loading}
       onClick={onClick}
     >
-      {loading && (
-        <span className={styles.marker} aria-hidden="true">
-          ◌
-        </span>
-      )}
+      {loading && <LoadingSpinner size="sm" />}
       {children}
     </button>
   );
