@@ -1,6 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
 import { ROUTES } from "../routes.js";
 import { useAuthStore } from "../store/authStore.js";
+import logo from "../assets/logo/udt-logo.png";
 import styles from "./Layout.module.css";
 
 const krw = new Intl.NumberFormat("ko-KR");
@@ -16,18 +17,10 @@ export default function Layout() {
       <header className={styles.header}>
         <div className={styles.headerInner}>
           <Link to={ROUTES.HOME} className={styles.brand}>
-            <span className={styles.mark} aria-hidden="true">U</span>
-            <span className={styles.wordmark}>
-              <span className={styles.logo}>UDT</span>
-              <span className={styles.tagline}>Used Device Safe Trade</span>
-            </span>
+            <img src={logo} alt="UDT — Used Device Safe Trade" className={styles.brandLogo} />
           </Link>
 
           <nav className={styles.nav}>
-            <Link to={ROUTES.HOME} className={styles.searchEntry} aria-label="검색">
-              <span aria-hidden="true">⌕</span>
-            </Link>
-
             {isMember ? (
               <>
                 <Link to={ROUTES.PRODUCT_NEW} className={styles.ctaSecondary}>상품 등록</Link>
