@@ -19,7 +19,7 @@ client.interceptors.response.use(
     const body = error.response?.data;
     if (error.response?.status === 401 && !url.startsWith("/api/auth/")) {
       useAuthStore.getState().clear();
-      if (window.location.pathname !== "/login") window.location.assign("/login");
+      if (window.location.pathname !== "/login") window.location.assign("/login?reason=expired");
     }
     return Promise.reject({
       code: body?.code ?? "NETWORK_ERROR",
