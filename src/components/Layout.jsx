@@ -3,8 +3,11 @@ import { ROUTES } from "../routes.js";
 import { useAuthStore } from "../store/authStore.js";
 import styles from "./Layout.module.css";
 
+const krw = new Intl.NumberFormat("ko-KR");
+
 export default function Layout() {
   const accessToken = useAuthStore((s) => s.accessToken);
+  const user = useAuthStore((s) => s.user);
   const clear = useAuthStore((s) => s.clear);
   const isMember = Boolean(accessToken);
 
@@ -29,6 +32,16 @@ export default function Layout() {
               <>
                 <Link to={ROUTES.PRODUCT_NEW} className={styles.ctaSecondary}>상품 등록</Link>
                 <Link to={ROUTES.MYPAGE} className={styles.navLink}>마이페이지</Link>
+                {user && (
+                  <span className={styles.userInfo}>
+                    <span className={styles.nickname}>{user.nickname}</span>
+                    {user.balanceKrw != null && (
+                      <span className={styles.balance}>
+                        잔액 {krw.format(user.balanceKrw)}원
+                      </span>
+                    )}
+                  </span>
+                )}
                 <button type="button" className={styles.linkButton} onClick={clear}>로그아웃</button>
               </>
             ) : (
