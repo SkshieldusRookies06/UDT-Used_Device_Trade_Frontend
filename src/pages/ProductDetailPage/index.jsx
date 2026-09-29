@@ -115,6 +115,9 @@ export default function ProductDetailPage() {
       navigate(ROUTES.TRANSACTION_DETAIL(txn.id));
     } catch (err) {
       setPurchaseError(err?.message || "구매 처리 중 오류가 발생했습니다.");
+      if (err?.code === "PRODUCT_NOT_ON_SALE") {
+        setReloadKey((v) => v + 1);
+      }
     } finally {
       setPurchasing(false);
     }
@@ -157,8 +160,6 @@ export default function ProductDetailPage() {
     description,
   } = product;
 
-  const isSeller = Boolean(user && (String(user.id) === String(sellerId) || user.nickname === sellerNickname));
-  const isAvailableForSale = status === "ON_SALE";
 
   const getImageUrl = (img) => {
     if (!img) return null;
@@ -268,25 +269,15 @@ export default function ProductDetailPage() {
               <span>{wishCount}</span>
             </button>
 
-            {isSeller ? (
-              <Button variant="secondary" size="lg" disabled>
-                본인이 등록한 상품
-              </Button>
-            ) : !isAvailableForSale ? (
-              <Button variant="secondary" size="lg" disabled>
-                판매 중인 상품이 아닙니다
-              </Button>
-            ) : (
-              <Button
-                variant="primary"
-                size="lg"
-                loading={purchasing}
-                disabled={purchasing}
-                onClick={handlePurchase}
-              >
-                {purchasing ? "구매 처리 중..." : "구매하기"}
-              </Button>
-            )}
+            <Button
+              variant="primary"
+              size="lg"
+              loading={purchasing}
+              disabled={purchasing}
+              onClick={handlePurchase}
+            >
+              {purchasing ? "구매 처리 중..." : "구매하기"}
+            </Button>
           </div>
         </div>
       </div>

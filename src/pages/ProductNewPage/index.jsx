@@ -35,7 +35,7 @@ export default function ProductNewPage() {
           setCategories(res);
         }
       })
-      .catch(() => {})
+      .catch(() => { })
       .finally(() => {
         if (alive) setLoadingCategories(false);
       });
@@ -163,7 +163,7 @@ export default function ProductNewPage() {
         description: form.description.trim(),
         priceKrw: form.priceKrw === "" ? null : Number(form.priceKrw),
         conditionGrade: form.conditionGrade || null,
-        categoryId: form.categoryId === "" ? null : Number(form.categoryId),
+        categoryId: form.categoryId || null,
       };
 
       const imageFiles = images.map((item) => item.file);
@@ -175,7 +175,7 @@ export default function ProductNewPage() {
       if (typeof window !== "undefined" && window.alert) {
         window.alert("관리자 검수 후 판매중으로 전환됩니다");
       }
-      navigate(ROUTES.MYPAGE, { state: { notice: "관리자 검수 후 판매중으로 전환됩니다" } });
+      navigate(ROUTES.MYPAGE);
     } catch (err) {
       if (err.code === "VALIDATION_ERROR") {
         // 400 VALIDATION_ERROR: fields[] 배열에 필드별 검증 실패 사유 포함 (각 입력창 하단에 표출)
