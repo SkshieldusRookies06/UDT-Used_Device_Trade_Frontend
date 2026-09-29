@@ -72,13 +72,11 @@ export default function MyPage() {
   const page = Number(searchParams.get("page") ?? 0);
 
   const [data, setData] = useState(null);
-  // 추가된 부분: 현재 불러온 데이터가 어느 탭의 데이터인지 추적합니다.
   const [dataTab, setDataTab] = useState(tab); 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [reloadKey, setReloadKey] = useState(0);
 
-  // 최신 사용자 정보 및 잔액 동기화
   useEffect(() => {
     fetchMe()
       .then((res) => {
@@ -107,16 +105,26 @@ export default function MyPage() {
       return { content: [], page: { number: 0, totalPages: 0, totalElements: 0, first: true, last: true } };
     };
 
-    fetchTabData()
-      .then((res) => {
+    // UX 개선: 에러가 너무 빨리 반환되어 깜빡이는 현상을 막기 위해 최소 300ms 로딩 보장
+    Promise.all([
+      fetchTabData(),
+      new Promise(resolve => setTimeout(resolve, 300))
+    ])
+      .then(([res]) => {
         if (!alive) return;
         const content = res?.content ?? res?.data?.content ?? [];
         const pageInfo = res?.page ?? res?.data?.page ?? null;
         setData({ content, page: pageInfo });
-        setDataTab(tab); // 데이터가 도착했을 때만 dataTab을 현재 탭으로 동기화합니다.
       })
-      .catch((e) => alive && setError(e))
-      .finally(() => alive && setLoading(false));
+      .catch((e) => {
+        if (alive) setError(e);
+      })
+      .finally(() => {
+        if (alive) {
+          setDataTab(tab); 
+          setLoading(false);
+        }
+      });
 
     return () => {
       alive = false;
@@ -126,10 +134,8 @@ export default function MyPage() {
   const currentTabObj = TABS.find((t) => t.id === tab) ?? TABS[0];
   const totalCount = data?.page?.totalElements ?? data?.content?.length ?? 0;
 
-  // 추가된 부분: 로딩 중이거나, 탭 URL이 바뀌었지만 아직 데이터가 도착하지 않았다면 로딩 상태로 간주
   const isSyncingTab = loading || dataTab !== tab;
 
-  // 탭별 Empty State 내용
   const renderEmptyState = () => {
     switch (tab) {
       case "buying":
@@ -196,7 +202,6 @@ export default function MyPage() {
     }
   };
 
-  // 1 & 2: 거래내역 테이블 렌더링 (구매내역 / 판매내역)
   const renderTransactionTable = () => (
     <div className={styles.tableContainer}>
       <div className={styles.tableHeader}>
@@ -247,7 +252,6 @@ export default function MyPage() {
     </div>
   );
 
-  // 3: 내 상품 리스트 렌더링
   const renderMyProductsList = () => (
     <ul className={styles.myProductList}>
       {data.content.map((item) => {
@@ -284,7 +288,6 @@ export default function MyPage() {
     </ul>
   );
 
-  // 4: 찜 목록 그리드 렌더링
   const renderWishesGrid = () => (
     <ul className={styles.grid}>
       {data.content.map((item) => (
@@ -297,7 +300,6 @@ export default function MyPage() {
 
   return (
     <section className={styles.container}>
-      {/* 피그마 상단 프로필 & 잔액 카드 */}
       <div className={styles.profileCard}>
         <div className={styles.profileLeft}>
           <div className={styles.avatar}>
@@ -320,7 +322,6 @@ export default function MyPage() {
         </div>
       </div>
 
-      {/* 피그마 언더라인 탭 바 */}
       <nav className={styles.tabBar} aria-label="마이페이지 탭 목록">
         {TABS.map((t) => (
           <button
@@ -334,7 +335,6 @@ export default function MyPage() {
         ))}
       </nav>
 
-      {/* 섹션 타이틀 및 총 건수 */}
       <div className={styles.sectionHeader}>
         <h3 className={styles.sectionTitle}>{currentTabObj.label}</h3>
         {!isSyncingTab && !error && data && (
@@ -342,7 +342,6 @@ export default function MyPage() {
         )}
       </div>
 
-      {/* 네 가지 상태 분기 (안전장치 적용) */}
       {isSyncingTab && !error && <LoadingSpinner />}
 
       {!isSyncingTab && error && (
