@@ -41,6 +41,15 @@
 
 @media (max-width: 767px) {
   .grid { grid-template-columns: 1fr; }
+
+  .input,
+  .search > button,
+  .pagination > button,
+  .categoryBtn { min-height: var(--touch-target); }
+
+  .search > button { height: auto; }
+
+  .pagination > button { height: auto; min-width: var(--touch-target); }
 }
 
 .categoryBar {
