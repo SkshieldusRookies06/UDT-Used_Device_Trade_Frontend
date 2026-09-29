@@ -1,2 +1,422 @@
-.wrapper { background: var(--color-surface); border: 1px solid var(--color-border);
-  border-radius: var(--radius); padding: var(--space-5); color: var(--color-text-muted); }
+.container {
+  max-width: var(--layout-max);
+  margin: 0 auto;
+  padding: var(--space-6) 0 var(--space-12);
+}
+
+/* 상단 프로필 & 가상 잔액 카드 */
+.profileCard {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  box-shadow: var(--shadow-xs);
+  margin-bottom: var(--space-6);
+}
+
+.profileLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-sunken);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+}
+
+.avatar svg {
+  width: 28px;
+  height: 28px;
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.nickname {
+  font-size: var(--text-section-title-size);
+  font-weight: var(--text-section-title-weight);
+  color: var(--color-text);
+  margin: 0;
+}
+
+.metaText {
+  font-size: var(--font-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.balanceBox {
+  background: var(--color-primary-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-5);
+  text-align: right;
+  min-width: 180px;
+}
+
+.balanceLabel {
+  font-size: var(--text-label-size);
+  color: var(--color-primary-text);
+  font-weight: var(--text-label-weight);
+  margin-bottom: var(--space-1);
+}
+
+.balanceAmount {
+  font-size: var(--font-xl);
+  font-weight: 700;
+  color: var(--color-primary-text);
+}
+
+/* 탭 네비게이션 */
+.tabBar {
+  display: flex;
+  gap: var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--space-6);
+}
+
+.tabButton {
+  background: none;
+  border: none;
+  padding: var(--space-3) var(--space-1);
+  font-size: var(--font-base);
+  font-weight: 500;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  position: relative;
+  transition: color 0.15s ease;
+}
+
+.tabButton:hover {
+  color: var(--color-text);
+}
+
+.tabButtonActive {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.tabButtonActive::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-primary);
+  border-radius: var(--radius-pill);
+}
+
+/* 탭 상단 헤더 (타이틀 + 건수) */
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.sectionTitle {
+  font-size: var(--font-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.totalCount {
+  font-size: var(--font-sm);
+  color: var(--color-text-muted);
+}
+
+/* 거래내역 테이블 (구매/판매) */
+.tableContainer {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: var(--space-6);
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: minmax(240px, 3fr) 140px 140px 120px 110px;
+  background: var(--color-surface-sunken);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-sm);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  align-items: center;
+}
+
+.tableHeaderColCenter {
+  text-align: center;
+}
+
+.tableHeaderColRight {
+  text-align: right;
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: minmax(240px, 3fr) 140px 140px 120px 110px;
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  align-items: center;
+  background: var(--color-surface);
+  transition: background 0.1s ease;
+}
+
+.tableRow:last-child {
+  border-bottom: none;
+}
+
+.tableRow:hover {
+  background: var(--color-background-subtle);
+}
+
+.productCol {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.productThumb {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius);
+  background: var(--color-surface-sunken);
+  border: 1px solid var(--color-border);
+  object-fit: cover;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-tertiary);
+  font-size: var(--text-micro-size);
+}
+
+.productInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.productTitle {
+  font-size: var(--font-base);
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.orderSubText {
+  font-size: var(--font-sm);
+  color: var(--color-text-tertiary);
+  margin: 0;
+}
+
+.amountCol {
+  font-size: var(--font-base);
+  font-weight: 700;
+  color: var(--color-text);
+  text-align: right;
+  padding-right: var(--space-4);
+}
+
+.statusCol {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dateCol {
+  font-size: var(--font-sm);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.actionCol {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* 내 상품 리스트 */
+.myProductList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-6) 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.myProductRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.myProductRow:last-child {
+  border-bottom: none;
+}
+
+.myProductRow:hover {
+  background: var(--color-background-subtle);
+}
+
+.myProductLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.myProductDetails {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.myProductTitle {
+  font-size: var(--font-base);
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.myProductNoticeMuted {
+  font-size: var(--font-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.myProductNoticeRejected {
+  font-size: var(--font-sm);
+  color: var(--color-danger);
+  margin: 0;
+}
+
+.myProductRight {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  flex-shrink: 0;
+}
+
+.myProductPrice {
+  font-size: var(--font-base);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* 찜 목록 그리드 */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-5);
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-8) 0;
+}
+
+/* Empty State (빈 결과) */
+.emptyState {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-12) var(--space-4);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-8);
+}
+
+.emptyIconCircle {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-sunken);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--space-2);
+}
+
+.emptyTitle {
+  font-size: var(--text-card-title-size);
+  font-weight: var(--text-card-title-weight);
+  color: var(--color-text);
+  margin: 0;
+}
+
+.emptyDescription {
+  font-size: var(--font-sm);
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-3) 0;
+}
+
+/* 에러 / 로딩 상태 */
+.errorState {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-10) var(--space-4);
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.errorMessage {
+  font-size: var(--font-base);
+  color: var(--color-danger);
+  margin-bottom: var(--space-4);
+}
+
+@media (max-width: 768px) {
+  .profileCard {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .balanceBox {
+    width: 100%;
+    text-align: left;
+  }
+  .tableHeader {
+    display: none;
+  }
+  .tableRow {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+  .amountCol, .dateCol, .statusCol, .actionCol {
+    text-align: left;
+    justify-content: flex-start;
+    padding: 0;
+  }
+}

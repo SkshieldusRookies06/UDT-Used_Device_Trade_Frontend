@@ -1,37 +1,465 @@
-.wrapper {
-  max-width: 600px;
+.container {
+  max-width: var(--layout-max);
   margin: 0 auto;
-  padding: 24px;
+  padding: var(--space-6) 0 var(--space-12);
 }
 
-.heading {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.infoBox {
-  background-color: #f8f9fa;
-  border: 1px solid #e9ecef;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 24px;
-  line-height: 1.6;
-}
-
-.statusBadge {
-  color: #0056b3;
-  font-weight: bold;
-}
-
-.actionGroup {
+.header {
   display: flex;
-  gap: 12px;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+  gap: var(--space-3);
 }
 
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.title {
+  font-size: var(--text-section-title-size);
+  font-weight: var(--text-section-title-weight);
+  color: var(--color-text);
+  margin: 0;
+}
+
+.orderId {
+  font-size: var(--text-section-title-size);
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.headerNotice {
+  font-size: var(--font-sm);
+  color: var(--color-text-tertiary);
+  margin: 0;
+}
+
+/* 카드 공통 스타일 */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin-bottom: var(--space-5);
+  box-shadow: var(--shadow-xs);
+}
+
+.cardTitle {
+  font-size: var(--text-card-title-size);
+  font-weight: var(--text-card-title-weight);
+  color: var(--color-text);
+  margin: 0 0 var(--space-4) 0;
+}
+
+/* 1. TransactionStepper */
+.stepperContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: var(--space-4) 0 var(--space-6);
+  position: relative;
+}
+
+.stepItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  z-index: 1;
+  min-width: 90px;
+}
+
+.stepCircle {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-sm);
+  font-weight: 700;
+  background: var(--color-surface-sunken);
+  color: var(--color-text-tertiary);
+  border: 2px solid var(--color-border);
+}
+
+.stepCircleActive {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-color: var(--color-primary);
+}
+
+.stepCircleDone {
+  background: var(--color-success);
+  color: var(--color-on-primary);
+  border-color: var(--color-success);
+}
+
+.stepLabel {
+  font-size: var(--font-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.stepSubText {
+  font-size: var(--text-micro-size);
+  color: var(--color-text-tertiary);
+  margin: 0;
+}
+
+.stepperLine {
+  flex: 1;
+  height: 2px;
+  background: var(--color-border);
+  margin: 0 var(--space-2);
+  margin-bottom: var(--space-6);
+}
+
+.stepperLineActive {
+  background: var(--color-primary);
+}
+
+.stepperNotice {
+  background: var(--color-background-subtle);
+  border-radius: var(--radius);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-micro-size);
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* 2. 거래 상품 카드 */
+.productCardBody {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.productMain {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.productThumb {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius);
+  background: var(--color-surface-sunken);
+  border: 1px solid var(--color-border);
+  object-fit: cover;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-tertiary);
+  font-size: var(--text-micro-size);
+}
+
+.productTitle {
+  font-size: var(--font-base);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 var(--space-1) 0;
+}
+
+.productMeta {
+  font-size: var(--font-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.productAmountBox {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.productAmountLabel {
+  font-size: var(--text-micro-size);
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--space-1);
+}
+
+.productAmount {
+  font-size: var(--font-xl);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* 3. 배송 정보 카드 */
+.shippingEmptyNotice {
+  font-size: var(--font-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.shippingInfoGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background: var(--color-background-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+  gap: var(--space-4);
+}
+
+.shippingInfoItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.shippingInfoLabel {
+  font-size: var(--text-micro-size);
+  color: var(--color-text-tertiary);
+}
+
+.shippingInfoValue {
+  font-size: var(--font-base);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* 4. 내가 할 수 있는 일 (액션 카드) */
+.actionCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.actionButtonGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.actionNotice {
+  font-size: var(--font-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.completionNotice {
+  font-size: var(--font-base);
+  font-weight: 600;
+  color: var(--color-success);
+  margin: 0;
+}
+
+/* 5. 분쟁 처리 상태 패널 */
+.disputePanel {
+  background: var(--color-background-subtle);
+  border: 1px solid var(--color-warning);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  margin-bottom: var(--space-5);
+}
+
+.disputeHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.disputeReasonBox {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-sm);
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+  line-height: 1.5;
+}
+
+.disputeFilesList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.fileDownloadBtn {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-sm);
+  color: var(--color-primary-text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.fileDownloadBtn:hover {
+  background: var(--color-primary-subtle);
+}
+
+/* 송장 입력 / 분쟁 신고 인라인 폼 */
+.formSection {
+  background: var(--color-background-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-5);
+  margin-top: var(--space-4);
+}
+
+.formTitle {
+  font-size: var(--font-base);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 var(--space-4) 0;
+}
+
+.formField {
+  margin-bottom: var(--space-4);
+}
+
+.formLabel {
+  display: block;
+  font-size: var(--font-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+
+.input {
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  font-size: var(--font-base);
+  color: var(--color-text);
+  box-sizing: border-box;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.textarea {
+  width: 100%;
+  min-height: 90px;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  font-size: var(--font-base);
+  color: var(--color-text);
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.fieldError {
+  font-size: var(--text-micro-size);
+  color: var(--color-danger);
+  margin-top: var(--space-1);
+}
+
+.filePreviewList {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.filePreviewItem {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+.previewImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fileRemoveBtn {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-pill);
+  background: var(--color-danger);
+  color: var(--color-on-primary);
+  border: none;
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.formButtonRow {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: flex-end;
+}
+
+/* 상태 및 에러 메시지 */
 .state {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-10) var(--space-4);
   text-align: center;
-  padding: 40px;
-  color: #6c757d;
+  margin: var(--space-8) auto;
+  max-width: var(--layout-max);
+}
+
+.stateMessage {
+  font-size: var(--font-base);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+}
+
+.stateError {
+  color: var(--color-danger);
+}
+
+@media (max-width: 768px) {
+  .productCardBody {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .productAmountBox {
+    text-align: left;
+  }
+  .shippingInfoGrid {
+    grid-template-columns: 1fr;
+  }
+  .stepperContainer {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .stepperLine {
+    display: none;
+  }
 }
