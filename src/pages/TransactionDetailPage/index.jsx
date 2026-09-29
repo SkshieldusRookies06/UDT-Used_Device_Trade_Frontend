@@ -685,9 +685,10 @@ export default function TransactionDetailPage() {
                     key={file.id}
                     type="button"
                     className={styles.fileDownloadBtn}
-                    onClick={() => handleDownloadFile(txn.dispute.id, file.id, file.filename)}
+                    onClick={() => handleDownloadFile(txn.dispute.id, file.id, file.originalName)}
                   >
-                    📎 {file.filename || `파일 #${file.id}`} (다운로드)
+                    {/* filename을 originalName으로 변경 (버튼 텍스트) */}
+                    {file.originalName || `파일 #${file.id}`} (다운로드)
                   </button>
                 ))}
               </div>
