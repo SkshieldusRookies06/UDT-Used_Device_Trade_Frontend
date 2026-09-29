@@ -22,8 +22,3 @@ export const downloadDisputeFile = async (disputeId, fileId, filename) => {
   a.click();
   URL.revokeObjectURL(url);
 };
-export const disputeFileUrl = (disputeId, fileId) =>
-  `${import.meta.env.VITE_API_URL}/api/disputes/${disputeId}/files/${fileId}`;
-
-export const fetchMyProducts = (params) => client.get("/api/me/products", { params });
-export const fetchMyWishes = (params) => client.get("/api/me/wishes", { params });

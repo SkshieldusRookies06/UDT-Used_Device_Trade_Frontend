@@ -6,9 +6,11 @@ import { useAuthStore } from "../../store/authStore.js";
 import { fetchMe } from "../../api/auth.js";
 import {
   fetchMyTransactions,
+} from "../../api/transactions.js";
+import {
   fetchMyProducts,
   fetchMyWishes,
-} from "../../api/transactions.js";
+} from "../../api/products.js";
 
 import ProductCard from "../../components/ProductCard.jsx";
 import StatusBadge from "../../components/StatusBadge.jsx";
@@ -335,10 +337,8 @@ export default function MyPage() {
       </div>
 
       {/* 네 가지 상태 분기 */}
-      {/* 1. 로딩 상태 */}
       {loading && <LoadingSpinner />}
 
-      {/* 2. 에러 상태 */}
       {!loading && error && (
         <div className={styles.errorState}>
           <p className={styles.errorMessage}>{error.message || "데이터를 불러오지 못했습니다."}</p>
@@ -348,10 +348,8 @@ export default function MyPage() {
         </div>
       )}
 
-      {/* 3. 빈 결과 상태 */}
       {!loading && !error && (!data || data.content.length === 0) && renderEmptyState()}
 
-      {/* 4. 정상 데이터 상태 */}
       {!loading && !error && data?.content?.length > 0 && (
         <>
           {(tab === "buying" || tab === "selling") && renderTransactionTable()}
