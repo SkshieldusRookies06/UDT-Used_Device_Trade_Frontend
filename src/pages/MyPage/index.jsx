@@ -72,6 +72,8 @@ export default function MyPage() {
   const page = Number(searchParams.get("page") ?? 0);
 
   const [data, setData] = useState(null);
+  // 추가된 부분: 현재 불러온 데이터가 어느 탭의 데이터인지 추적합니다.
+  const [dataTab, setDataTab] = useState(tab); 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [reloadKey, setReloadKey] = useState(0);
@@ -111,6 +113,7 @@ export default function MyPage() {
         const content = res?.content ?? res?.data?.content ?? [];
         const pageInfo = res?.page ?? res?.data?.page ?? null;
         setData({ content, page: pageInfo });
+        setDataTab(tab); // 데이터가 도착했을 때만 dataTab을 현재 탭으로 동기화합니다.
       })
       .catch((e) => alive && setError(e))
       .finally(() => alive && setLoading(false));
@@ -122,6 +125,9 @@ export default function MyPage() {
 
   const currentTabObj = TABS.find((t) => t.id === tab) ?? TABS[0];
   const totalCount = data?.page?.totalElements ?? data?.content?.length ?? 0;
+
+  // 추가된 부분: 로딩 중이거나, 탭 URL이 바뀌었지만 아직 데이터가 도착하지 않았다면 로딩 상태로 간주
+  const isSyncingTab = loading || dataTab !== tab;
 
   // 탭별 Empty State 내용
   const renderEmptyState = () => {
@@ -331,15 +337,15 @@ export default function MyPage() {
       {/* 섹션 타이틀 및 총 건수 */}
       <div className={styles.sectionHeader}>
         <h3 className={styles.sectionTitle}>{currentTabObj.label}</h3>
-        {!loading && !error && data && (
+        {!isSyncingTab && !error && data && (
           <span className={styles.totalCount}>총 {totalCount}건</span>
         )}
       </div>
 
-      {/* 네 가지 상태 분기 */}
-      {loading && <LoadingSpinner />}
+      {/* 네 가지 상태 분기 (안전장치 적용) */}
+      {isSyncingTab && !error && <LoadingSpinner />}
 
-      {!loading && error && (
+      {!isSyncingTab && error && (
         <div className={styles.errorState}>
           <p className={styles.errorMessage}>{error.message || "데이터를 불러오지 못했습니다."}</p>
           <Button variant="secondary" onClick={() => setReloadKey((v) => v + 1)}>
@@ -348,9 +354,9 @@ export default function MyPage() {
         </div>
       )}
 
-      {!loading && !error && (!data || data.content.length === 0) && renderEmptyState()}
+      {!isSyncingTab && !error && (!data || data.content.length === 0) && renderEmptyState()}
 
-      {!loading && !error && data?.content?.length > 0 && (
+      {!isSyncingTab && !error && data?.content?.length > 0 && (
         <>
           {(tab === "buying" || tab === "selling") && renderTransactionTable()}
           {tab === "products" && renderMyProductsList()}
