@@ -1,6 +1,9 @@
+import { useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { ROUTES } from "../routes.js";
+import { fetchMyWishes } from "../api/products.js";
 import { useAuthStore } from "../store/authStore.js";
+import { useWishStore } from "../store/wishStore.js";
 import logo from "../assets/logo/udt-logo.png";
 import styles from "./Layout.module.css";
 
@@ -10,7 +13,36 @@ export default function Layout() {
   const accessToken = useAuthStore((s) => s.accessToken);
   const user = useAuthStore((s) => s.user);
   const clear = useAuthStore((s) => s.clear);
+  const setWishedIds = useWishStore((s) => s.setWishedIds);
   const isMember = Boolean(accessToken);
+
+  useEffect(() => {
+    if (!accessToken) return undefined;
+    let alive = true;
+    const touched = new Map();
+    const unsubscribe = useWishStore.subscribe((state, prev) => {
+      state.wishedIds.forEach((id) => !prev.wishedIds.includes(id) && touched.set(id, true));
+      prev.wishedIds.forEach((id) => !state.wishedIds.includes(id) && touched.set(id, false));
+    });
+    const loadWishedIds = async () => {
+      const ids = [];
+      for (let page = 0; ; page += 1) {
+        const res = await fetchMyWishes({ page, size: 100 });
+        ids.push(...(res?.content ?? []).map((p) => p.id));
+        if (!res?.page || res.page.last || page + 1 >= res.page.totalPages) break;
+      }
+      unsubscribe();
+      if (!alive || useAuthStore.getState().accessToken !== accessToken) return;
+      const merged = ids.filter((id) => touched.get(id) !== false);
+      touched.forEach((wished, id) => wished && !merged.includes(id) && merged.push(id));
+      setWishedIds(merged);
+    };
+    loadWishedIds().catch(() => {}).finally(unsubscribe);
+    return () => {
+      alive = false;
+      unsubscribe();
+    };
+  }, [accessToken, setWishedIds]);
 
   return (
     <div className={styles.wrapper}>

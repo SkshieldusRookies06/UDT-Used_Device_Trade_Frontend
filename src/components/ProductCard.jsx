@@ -1,17 +1,23 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../routes.js";
+import { useWishStore } from "../store/wishStore.js";
 import StatusBadge from "./StatusBadge.jsx";
 import styles from "./ProductCard.module.css";
 
 export default function ProductCard({ product }) {
   const { id, title, priceKrw, status, categoryName, sellerNickname, thumbnailUrl } = product;
   const imageSrc = thumbnailUrl ? `${import.meta.env.VITE_API_URL}${thumbnailUrl}` : null;
+  const wished = useWishStore((s) => s.wishedIds.includes(id));
 
   return (
     <Link to={ROUTES.PRODUCT_DETAIL(id)} className={styles.card}>
       <div className={styles.thumb}>
         {imageSrc ? <img src={imageSrc} alt="" /> : <span className={styles.noImage}>이미지 없음</span>}
+        <span className={`${styles.wish} ${wished ? styles.wished : ""}`}>
+          <span aria-hidden="true">{wished ? "♥" : "♡"}</span>
+          <span className={styles.srOnly}>{wished ? "찜한 상품" : "찜하지 않은 상품"}</span>
+        </span>
       </div>
       <div className={styles.body}>
         <StatusBadge status={status} />
