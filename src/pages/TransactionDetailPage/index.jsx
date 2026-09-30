@@ -31,11 +31,12 @@ function Thumbnail({ src, alt }) {
     setHasError(!src);
   }, [src]);
 
+  // ✨ 슬래시(/) 빠짐 방지 및 blob, 외부 URL 완벽 대응
   const fullSrc =
     !hasError && src
-      ? src.startsWith("http://") || src.startsWith("https://")
+      ? src.startsWith("http://") || src.startsWith("https://") || src.startsWith("blob:")
         ? src
-        : `${import.meta.env.VITE_API_URL}${src}`
+        : `${import.meta.env.VITE_API_URL || ""}${src.startsWith("/") ? "" : "/"}${src}`
       : null;
 
   if (!fullSrc || hasError) {
@@ -381,7 +382,7 @@ export default function TransactionDetailPage() {
   }
 
   const productTitle = txn.productTitle || txn.product?.title || txn.product?.name || "상품명 정보 없음";
-  const productThumb = txn.thumbnailUrl || txn.product?.thumbnailUrl;
+  const productThumb = txn.productImageUrl || txn.productThumbnailUrl || txn.thumbnailUrl || txn.imageUrl || txn.product?.thumbnailUrl || txn.product?.imageUrl;
   const amount = txn.amountKrw ?? txn.priceKrw ?? 0;
   const counterpartText = isBuyer(txn, user)
     ? `판매자 ${txn.sellerNickname || "-"}`
