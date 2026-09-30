@@ -463,3 +463,17 @@
     display: none;
   }
 }
+@media (max-width: 767px) {
+  .container button,
+  .input,
+  .formField input[type="file"]::file-selector-button { min-height: var(--touch-target); }
+
+  .fileRemoveBtn {
+    top: 0;
+    right: 0;
+    width: var(--touch-target);
+    height: var(--touch-target);
+    border: calc((var(--touch-target) - 20px) / 2) solid transparent;
+    background-clip: padding-box;
+  }
+}
