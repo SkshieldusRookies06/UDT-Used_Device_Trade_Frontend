@@ -583,7 +583,7 @@ export default function TransactionDetailPage() {
                 id="disputeFileInput"
                 type="file"
                 multiple
-                accept="image/*"
+                accept="image/jpeg,image/png,image/webp,application/pdf"
                 onChange={handleFileChange}
               />
               {disputeFiles.length > 0 && (
