@@ -648,7 +648,7 @@ export default function TransactionDetailPage() {
                     className={styles.fileDownloadBtn}
                     onClick={() => handleDownloadFile(txn.dispute.id, file.id, file.originalName)}
                   >
-                    {file.originalName || `파일 #${file.id}`} (다운로드)
+                    📎 {file.originalName || `파일 #${file.id}`} (다운로드)
                   </button>
                 ))}
               </div>
