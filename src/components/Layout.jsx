@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { ROUTES } from "../routes.js";
 import { fetchMyWishes } from "../api/products.js";
 import { useAuthStore } from "../store/authStore.js";
@@ -14,7 +14,13 @@ export default function Layout() {
   const user = useAuthStore((s) => s.user);
   const clear = useAuthStore((s) => s.clear);
   const setWishedIds = useWishStore((s) => s.setWishedIds);
+  const navigate = useNavigate();
   const isMember = Boolean(accessToken);
+
+  const logout = () => {
+    clear();
+    navigate(ROUTES.HOME, { replace: true });
+  };
 
   useEffect(() => {
     if (!accessToken) return undefined;
@@ -67,7 +73,7 @@ export default function Layout() {
                     )}
                   </span>
                 )}
-                <button type="button" className={styles.linkButton} onClick={clear}>로그아웃</button>
+                <button type="button" className={styles.linkButton} onClick={logout}>로그아웃</button>
               </>
             ) : (
               <>
