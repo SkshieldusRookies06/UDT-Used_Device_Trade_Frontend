@@ -108,3 +108,15 @@
   color: var(--color-primary-text);
   font-weight: var(--text-label-weight);
 }
+
+@media (max-width: 767px) {
+  .switch { align-items: center; }
+
+  .switchLink {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--touch-target);
+    min-height: var(--touch-target);
+  }
+}

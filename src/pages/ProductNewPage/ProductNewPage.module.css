@@ -395,4 +395,20 @@
   .actions button {
     width: 100%;
   }
+
+  .bcLink {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch-target);
+  }
+
+  .deleteBtn,
+  .deleteBtn:hover {
+    top: 0;
+    right: 0;
+    width: var(--touch-target);
+    height: var(--touch-target);
+    border: calc((var(--touch-target) - 24px) / 2) solid transparent;
+    background-clip: padding-box;
+  }
 }

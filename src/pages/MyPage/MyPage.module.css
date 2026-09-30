@@ -420,3 +420,7 @@
     padding: 0;
   }
 }
+
+@media (max-width: 767px) {
+  .container button { min-height: var(--touch-target); }
+}
