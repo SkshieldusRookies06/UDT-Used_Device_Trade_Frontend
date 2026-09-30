@@ -24,7 +24,6 @@ import {
 } from "./actions.js";
 import styles from "./TransactionDetailPage.module.css";
 
-// 썸네일 이미지 컴포넌트
 function Thumbnail({ src, alt }) {
   const [hasError, setHasError] = useState(!src);
 
@@ -58,7 +57,6 @@ Thumbnail.propTypes = {
   alt: PropTypes.string.isRequired,
 };
 
-// 피그마 스펙 트랜잭션 스텝퍼 컴포넌트
 function TransactionStepper({ status }) {
   const isPaid = ["PAID", "SHIPPING", "CONFIRMED"].includes(status);
   const isShipping = ["SHIPPING", "CONFIRMED"].includes(status);
@@ -70,7 +68,6 @@ function TransactionStepper({ status }) {
     <div className={styles.card}>
       <h3 className={styles.cardTitle}>거래 진행 상태</h3>
       <div className={styles.stepperContainer}>
-        {/* 1단계: 결제완료 */}
         <div className={styles.stepItem}>
           <div
             className={`${styles.stepCircle} ${
@@ -93,7 +90,6 @@ function TransactionStepper({ status }) {
           }`}
         />
 
-        {/* 2단계: 배송중 */}
         <div className={styles.stepItem}>
           <div
             className={`${styles.stepCircle} ${
@@ -116,7 +112,6 @@ function TransactionStepper({ status }) {
           }`}
         />
 
-        {/* 3단계: 구매확정 */}
         <div className={styles.stepItem}>
           <div
             className={`${styles.stepCircle} ${
@@ -158,19 +153,16 @@ export default function TransactionDetailPage() {
   const [reloadKey, setReloadKey] = useState(0);
   const [actionLoading, setActionLoading] = useState(false);
 
-  // 송장 입력 폼 상태
   const [isShippingFormOpen, setIsShippingFormOpen] = useState(false);
   const [courier, setCourier] = useState("CJ대한통운");
   const [trackingNo, setTrackingNo] = useState("");
   const [shippingErrors, setShippingErrors] = useState({});
 
-  // 분쟁 신고 폼 상태
   const [isDisputeFormOpen, setIsDisputeFormOpen] = useState(false);
   const [disputeReason, setDisputeReason] = useState("");
   const [disputeFiles, setDisputeFiles] = useState([]);
   const [disputeErrors, setDisputeErrors] = useState({});
 
-  // 최신 사용자 정보 동기화
   useEffect(() => {
     fetchMe()
       .then((res) => {
@@ -182,7 +174,6 @@ export default function TransactionDetailPage() {
       .catch(() => {});
   }, [setUser]);
 
-  // 거래 상세 데이터 조회
   useEffect(() => {
     let alive = true;
     setLoading(true);
@@ -206,14 +197,12 @@ export default function TransactionDetailPage() {
     };
   }, [id, reloadKey]);
 
-  // 언마운트 시 첨부파일 ObjectURL 메모리 해제
   useEffect(() => {
     return () => {
       disputeFiles.forEach((f) => URL.revokeObjectURL(f.preview));
     };
   }, [disputeFiles]);
 
-  // 1. 송장 입력 핸들러
   const handleRegisterShipping = async (e) => {
     e.preventDefault();
     const errors = {};
@@ -241,10 +230,10 @@ export default function TransactionDetailPage() {
       setTxn(updated?.data ?? updated ?? txn);
       setReloadKey((k) => k + 1);
     } catch (err) {
-      if (err.fields && Array.isArray(err.fields)) {
+      if (err.fields && err.fields.length) {
         const fieldMap = {};
         err.fields.forEach((f) => {
-          fieldMap[f.field] = f.message;
+          fieldMap[f.name] = f.message;
         });
         setShippingErrors(fieldMap);
       } else {
@@ -255,7 +244,6 @@ export default function TransactionDetailPage() {
     }
   };
 
-  // 2. 구매 확정 핸들러
   const handleConfirm = async () => {
     const isOk = window.confirm(
       `구매를 확정하시겠습니까?\n구매확정 후에는 취소나 환불이 불가능하며, 판매자에게 대금이 정산됩니다.`
@@ -275,7 +263,6 @@ export default function TransactionDetailPage() {
     }
   };
 
-  // 3. 분쟁 파일 추가 핸들러
   const handleFileChange = (e) => {
     const selected = Array.from(e.target.files);
     if (disputeFiles.length + selected.length > 3) {
@@ -291,7 +278,6 @@ export default function TransactionDetailPage() {
     e.target.value = "";
   };
 
-  // 분쟁 파일 개별 제거
   const handleRemoveFile = (index) => {
     setDisputeFiles((prev) => {
       const copy = [...prev];
@@ -301,7 +287,6 @@ export default function TransactionDetailPage() {
     });
   };
 
-  // 4. 분쟁 신고 제출 핸들러
   const handleSubmitDispute = async (e) => {
     e.preventDefault();
     const errors = {};
@@ -338,7 +323,6 @@ export default function TransactionDetailPage() {
     }
   };
 
-  // 증빙 파일 다운로드 핸들러
   const handleDownloadFile = async (disputeId, fileId, filename) => {
     try {
       await downloadDisputeFile(disputeId, fileId, filename || `dispute-${fileId}`);
@@ -347,7 +331,6 @@ export default function TransactionDetailPage() {
     }
   };
 
-  // 1. 로딩 상태
   if (loading) {
     return (
       <section className={styles.container}>
@@ -356,7 +339,6 @@ export default function TransactionDetailPage() {
     );
   }
 
-  // 2. 에러 상태 (제3자 접근 403 권한 오류 포함)
   if (error) {
     const isForbidden =
       error.status === 403 ||
@@ -387,7 +369,6 @@ export default function TransactionDetailPage() {
     );
   }
 
-  // 3. 빈 결과 / 데이터 없음
   if (!txn) {
     return (
       <section className={styles.state}>
@@ -406,10 +387,8 @@ export default function TransactionDetailPage() {
     ? `판매자 ${txn.sellerNickname || "-"}`
     : `구매자 ${txn.buyerNickname || "-"}`;
 
-  // 4. 정상 렌더링 상태
   return (
     <section className={styles.container}>
-      {/* 헤더 */}
       <div className={styles.header}>
         <div className={styles.headerLeft}>
           <h1 className={styles.title}>거래 상세</h1>
@@ -419,10 +398,8 @@ export default function TransactionDetailPage() {
         <p className={styles.headerNotice}>거래 당사자만 접근할 수 있습니다</p>
       </div>
 
-      {/* 1. TransactionStepper 진행 단계 */}
       <TransactionStepper status={txn.status} />
 
-      {/* 2. 거래 상품 카드 */}
       <div className={styles.card}>
         <h3 className={styles.cardTitle}>거래 상품</h3>
         <div className={styles.productCardBody}>
@@ -442,7 +419,6 @@ export default function TransactionDetailPage() {
         </div>
       </div>
 
-      {/* 3. 배송 정보 카드 */}
       <div className={styles.card}>
         <h3 className={styles.cardTitle}>배송 정보</h3>
         {txn.courier && txn.trackingNo ? (
@@ -455,12 +431,6 @@ export default function TransactionDetailPage() {
               <span className={styles.shippingInfoLabel}>송장번호 trackingNo</span>
               <span className={styles.shippingInfoValue}>{txn.trackingNo}</span>
             </div>
-            <div className={styles.shippingInfoItem}>
-              <span className={styles.shippingInfoLabel}>등록 일시</span>
-              <span className={styles.shippingInfoValue}>
-                {(txn.shippedAt || txn.updatedAt || txn.createdAt || "").slice(0, 16).replace("T", " ")}
-              </span>
-            </div>
           </div>
         ) : (
           <p className={styles.shippingEmptyNotice}>
@@ -469,7 +439,6 @@ export default function TransactionDetailPage() {
         )}
       </div>
 
-      {/* 4. 내가 할 수 있는 일 (상태별 액션 카드) */}
       <div className={styles.card}>
         <div className={styles.actionCardHeader}>
           <h3 className={styles.cardTitle}>
@@ -480,9 +449,7 @@ export default function TransactionDetailPage() {
           </h3>
         </div>
 
-        {/* 액션 버튼 그룹 */}
         <div className={styles.actionButtonGroup}>
-          {/* 판매자: 송장 정보 입력 (PAID 상태) */}
           {canRegisterShipping(txn, user) && (
             <Button
               variant="primary"
@@ -493,7 +460,6 @@ export default function TransactionDetailPage() {
             </Button>
           )}
 
-          {/* 구매자: 구매 확정 (SHIPPING 상태) */}
           {canConfirm(txn, user) && (
             <Button
               variant="primary"
@@ -504,7 +470,6 @@ export default function TransactionDetailPage() {
             </Button>
           )}
 
-          {/* 구매자: 분쟁 신고 (PAID 또는 SHIPPING 상태) */}
           {canOpenDispute(txn, user) && (
             <Button
               variant="danger"
@@ -516,7 +481,6 @@ export default function TransactionDetailPage() {
           )}
         </div>
 
-        {/* 상태별 안내 문구 */}
         {txn.status === "PAID" && isBuyer(txn, user) && (
           <p className={styles.actionNotice}>
             판매자의 상품 발송 및 송장 번호 입력을 기다리고 있습니다. 문제 발생 시 분쟁을 신고할 수 있습니다.
@@ -543,7 +507,6 @@ export default function TransactionDetailPage() {
           </p>
         )}
 
-        {/* 인라인 송장 입력 폼 */}
         {isShippingFormOpen && canRegisterShipping(txn, user) && (
           <form className={styles.formSection} onSubmit={handleRegisterShipping}>
             <h4 className={styles.formTitle}>배송 정보 등록</h4>
@@ -596,7 +559,6 @@ export default function TransactionDetailPage() {
           </form>
         )}
 
-        {/* 인라인 분쟁 신고 폼 */}
         {isDisputeFormOpen && canOpenDispute(txn, user) && (
           <form className={styles.formSection} onSubmit={handleSubmitDispute}>
             <h4 className={styles.formTitle}>분쟁 신고 접수</h4>
@@ -658,7 +620,6 @@ export default function TransactionDetailPage() {
         )}
       </div>
 
-      {/* 5. 분쟁 처리 상태 패널 (DISPUTED 상태일 때만 노출) */}
       {txn.status === "DISPUTED" && txn.dispute && (
         <div className={styles.disputePanel}>
           <div className={styles.disputeHeader}>
@@ -666,7 +627,7 @@ export default function TransactionDetailPage() {
               분쟁 처리 상태
             </h3>
             <span style={{ fontSize: "13px", color: "var(--color-text-muted)" }}>
-              접수일시: {(txn.dispute.createdAt || txn.updatedAt || "").slice(0, 16).replace("T", " ")}
+              접수일시: {(txn.dispute.createdAt || "").slice(0, 16).replace("T", " ")}
             </span>
           </div>
 
@@ -687,7 +648,6 @@ export default function TransactionDetailPage() {
                     className={styles.fileDownloadBtn}
                     onClick={() => handleDownloadFile(txn.dispute.id, file.id, file.originalName)}
                   >
-                    {/* filename을 originalName으로 변경 (버튼 텍스트) */}
                     {file.originalName || `파일 #${file.id}`} (다운로드)
                   </button>
                 ))}

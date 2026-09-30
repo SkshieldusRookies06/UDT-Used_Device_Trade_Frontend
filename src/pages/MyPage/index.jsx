@@ -105,7 +105,6 @@ export default function MyPage() {
       return { content: [], page: { number: 0, totalPages: 0, totalElements: 0, first: true, last: true } };
     };
 
-    // UX 개선: 에러가 너무 빨리 반환되어 깜빡이는 현상을 막기 위해 최소 300ms 로딩 보장
     Promise.all([
       fetchTabData(),
       new Promise(resolve => setTimeout(resolve, 300))
@@ -270,11 +269,6 @@ export default function MyPage() {
                 <p className={styles.myProductTitle}>{item.title}</p>
                 {item.status === "INSPECTING" && (
                   <p className={styles.myProductNoticeMuted}>- 관리자 검수를 기다리는 중입니다</p>
-                )}
-                {item.status === "REJECTED" && (
-                  <p className={styles.myProductNoticeRejected}>
-                    - 반려 사유: {item.rejectReason || "이미지가 실제 제품과 다릅니다"}
-                  </p>
                 )}
               </div>
             </div>
