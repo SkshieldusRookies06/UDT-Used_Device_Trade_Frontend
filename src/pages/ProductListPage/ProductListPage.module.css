@@ -16,7 +16,7 @@
   padding: 0;
   display: grid;
   gap: var(--space-4);
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .state {
@@ -35,12 +35,17 @@
   margin-top: var(--space-5);
 }
 
-@media (max-width: 1279px) {
-  .grid { grid-template-columns: repeat(3, 1fr); }
-}
-
 @media (max-width: 767px) {
   .grid { grid-template-columns: 1fr; }
+
+  .input,
+  .search > button,
+  .pagination > button,
+  .categoryBtn { min-height: var(--touch-target); }
+
+  .search > button { height: auto; }
+
+  .pagination > button { height: auto; min-width: var(--touch-target); }
 }
 
 .categoryBar {

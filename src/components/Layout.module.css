@@ -172,4 +172,29 @@
     padding-left: var(--space-4);
     padding-right: var(--space-4);
   }
+
+  .brand { min-height: var(--touch-target); }
+
+  .brandLogo { height: 40px; }
+
+  .nav { gap: var(--space-2); }
+
+  .userInfo { display: none; }
+
+  .navLink,
+  .linkButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--touch-target);
+    min-height: var(--touch-target);
+    white-space: nowrap;
+  }
+
+  .ctaSecondary,
+  .ctaPrimary {
+    height: var(--touch-target);
+    padding: 0 var(--space-3);
+    white-space: nowrap;
+  }
 }
