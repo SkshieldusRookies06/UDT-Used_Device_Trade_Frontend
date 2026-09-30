@@ -85,6 +85,11 @@ export default function ProductListPage() {
 
   return (
     <section>
+      <div className={styles.intro}>
+        <p className={styles.introTitle}><span className={styles.introAccent}>검수</span>부터 <span className={styles.introAccent}>거래</span>까지</p>
+        <p className={styles.introDesc}>중고 전자기기를 안전하게 사고파는 곳</p>
+      </div>
+
       <h1 className={styles.heading}>판매 중인 상품</h1>
 
       <form className={styles.search} onSubmit={handleSearchSubmit}>
