@@ -31,7 +31,7 @@ function Thumbnail({ src, alt }) {
     setHasError(!src);
   }, [src]);
 
-  // ✨ 슬래시(/) 빠짐 방지 및 blob, 외부 URL 완벽 대응
+  // 슬래시(/) 빠짐 방지 및 blob, 외부 URL 대응
   const fullSrc =
     !hasError && src
       ? src.startsWith("http://") || src.startsWith("https://") || src.startsWith("blob:")
