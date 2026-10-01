@@ -31,14 +31,23 @@
   justify-content: center;
   width: var(--space-8);
   height: var(--space-8);
+  border: 0;
+  padding: 0;
   border-radius: var(--radius-pill);
   background: var(--color-surface);
   box-shadow: var(--shadow-xs);
   color: var(--color-text-muted);
   font-size: var(--font-lg);
   line-height: 1;
+  cursor: pointer;
 }
 
+.wish:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.wish:disabled { cursor: wait; }
 .wish.wished { color: var(--color-danger); }
 
 .srOnly {
