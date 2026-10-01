@@ -414,7 +414,7 @@ export default function TransactionDetailPage() {
             </div>
           </div>
           <div className={styles.productAmountBox}>
-            <div className={styles.productAmountLabel}>결제 금액 amountKrw</div>
+            <div className={styles.productAmountLabel}>결제 금액</div>
             <div className={styles.productAmount}>{amount.toLocaleString()}원</div>
           </div>
         </div>
@@ -425,11 +425,11 @@ export default function TransactionDetailPage() {
         {txn.courier && txn.trackingNo ? (
           <div className={styles.shippingInfoGrid}>
             <div className={styles.shippingInfoItem}>
-              <span className={styles.shippingInfoLabel}>택배사 courier</span>
+              <span className={styles.shippingInfoLabel}>택배사</span>
               <span className={styles.shippingInfoValue}>{txn.courier}</span>
             </div>
             <div className={styles.shippingInfoItem}>
-              <span className={styles.shippingInfoLabel}>송장번호 trackingNo</span>
+              <span className={styles.shippingInfoLabel}>송장번호</span>
               <span className={styles.shippingInfoValue}>{txn.trackingNo}</span>
             </div>
           </div>
