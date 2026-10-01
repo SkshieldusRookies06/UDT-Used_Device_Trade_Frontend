@@ -8,7 +8,10 @@
 
 ---
 
-## 0. [9/27 개정] 연휴 뒤 첫날 내가 할 것 — FE-A
+## 0. [9/27 개정 · **완료(9/30)**] 연휴 뒤 첫날 내가 할 것 — FE-A
+
+> **이 절은 끝났다. 기록으로만 남긴다 — 지금 다시 하지 않는다.**
+> T-011·T-012·T-020 모두 `main` 머지 완료. 오늘 할 일은 [`../../tasks/README.md`](../../tasks/README.md) 현황 표를 본다.
 
 > **공통 절차 (전원)**
 > 1. `git checkout main && git pull` → 내 브랜치에서 `git merge main`
@@ -130,7 +133,7 @@ npm run mock      # 백엔드 리포의 mock/server.mjs 를 실행한다
 **3) 게이트를 돌린다**
 
 ```bash
-npm run gate      # 13/13 ok (목 서버 기준 · 실서버는 BE-B T-005 전 8/13이 정상)
+npm run gate      # 13/13 ok (목 서버·실서버 모두 13/13 · 9/30 확인)
 ```
 백엔드 리포가 형제 폴더가 아니면 `BACKEND_REPO=<경로> npm run gate`.
 
@@ -278,7 +281,7 @@ npm run mock         # 목 서버 8080 — 계약대로 응답한다
 
 # 내 완료 증명
 npm run build        # 에러 0
-npm run gate         # 13/13 ok (목 서버 기준 · 실서버는 BE-B T-005 전 8/13이 정상)
+npm run gate         # 13/13 ok (목 서버·실서버 모두 13/13 · 9/30 확인)
 
 # 규약 확인 — 전부 무출력이 정상
 grep -rn "axios" src/pages/                       # 컴포넌트에서 직접 호출 금지

@@ -1,8 +1,8 @@
 # 내 하루 루프 — 프론트 (모든 명령은 `UDT-Used_Device_Trade-frontend/` 루트에서 시작)
 
 > **이 프로젝트는 리포가 둘이다.** 백엔드 리포를 **형제 폴더**로 클론해 둔다 —
-> `npm run gate`·`npm run mock`이 `../UDT-Used_Device_Trade-backend`를 찾는다.
-> 다른 곳에 뒀으면 `BACKEND_REPO=<경로>`를 앞에 붙인다.
+> `npm run gate`·`npm run mock`이 형제 폴더를 훑어 `seams/check-api.mjs`가 있는 곳을 자동으로 찾는다.
+> 형제 폴더가 아니면 `BACKEND_REPO=<경로>`를 앞에 붙인다.
 
 > 먼저 `onboarding/팀원용-한장.md`의 다섯 줄을 읽는다. 막혔을 때 4번을 이미 읽은 사람만 30분 만에 손을 든다.
 > **아래 명령은 셋업을 실제로 통과한 사람이 자기가 친 명령을 그대로 붙여넣는다.** 기억으로 쓰지 않는다.
@@ -22,8 +22,10 @@
 ```
 전제: Node LTS 설치 (확인: node -v)
 cd <작업폴더>
-git clone <백엔드 URL> UDT-Used_Device_Trade-backend
-git clone <프론트 URL> UDT-Used_Device_Trade-frontend
+git clone https://github.com/SkshieldusRookies06/UDT-Used_Device_Trade_Backend.git  UDT-Used_Device_Trade-backend
+git clone https://github.com/SkshieldusRookies06/UDT-Used_Device_Trade_Frontend.git UDT-Used_Device_Trade-frontend
+                                                       ↑ 리포 이름과 폴더 이름이 다르다. 폴더 이름을 위처럼 지정한다
+                                                         (문서의 ../UDT-Used_Device_Trade-backend/... 링크가 이 이름을 전제로 한다)
 cd UDT-Used_Device_Trade-frontend
 npm ci                               ← install이 아니라 ci. lock 파일 그대로 설치한다
 cp .env.example .env                 ← .env 안에 한 줄: VITE_API_URL=http://localhost:8080
@@ -89,7 +91,9 @@ cp .env.example .env                 ← .env 안에 한 줄: VITE_API_URL=http:
 | `Failed to resolve import "x"` | pull 후 `npm ci` 안 했거나 import 경로 대소문자 오타 |
 | `npm ci ... package-lock.json are in sync` 오류 | 누군가 의존성을 lock 없이 올렸다. 손대지 말고 팀 채널에 |
 | 요청이 두 번 나간다 | React StrictMode 개발 모드 정상 동작. 버그 아님 |
-| 401 뒤 화면이 멈춘다 | 토큰 만료. SPEC §3.4 — 인터셉터가 authStore 비우고 `/login`으로 |
+| 401 뒤 화면이 멈춘다 | 토큰 만료. SPEC §3.4 — 인터셉터가 authStore 비우고 `/login?reason=expired`로 |
+| 409·403인데 에러 문구가 안 뜬다 | `if (Array.isArray(err.fields))`로 분기했다. 인터셉터가 `fields`를 **항상 배열**로 채우므로 늘 참이다 — `err.fields.length`로 판정한다. **프론트 소유** |
+| 화면에 없는 값이 뜬다 / 엉뚱한 날짜가 뜬다 | SPEC §4에 없는 필드를 읽었다(`rejectReason`·`shippedAt` 등은 응답에 없다). Entity 설계서의 컬럼 ≠ API 응답 필드. **프론트 소유** |
 | 로그인 실패했는데 로그인 화면으로 계속 튕긴다 | `/api/auth/**`를 401 인터셉터에서 제외하지 않았다 (SPEC §0 API 호출 행) |
 
 **30분 넘으면 `<프론트 오너 이름>`에게 말한다. 규약 4번이고, 잘못이 아니다.**

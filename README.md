@@ -1,7 +1,8 @@
 # UDT — 프론트엔드
 
 > **이 프로젝트는 리포 2개로 구성됩니다.**
-> 백엔드(메인 리포): [UDT-Used_Device_Trade-backend](https://github.com/<조직>/UDT-Used_Device_Trade-backend) ← 링크를 채워 주세요
+> 프론트(이 리포): [UDT-Used_Device_Trade_Frontend](https://github.com/SkshieldusRookies06/UDT-Used_Device_Trade_Frontend)
+> 백엔드(메인 리포): [UDT-Used_Device_Trade_Backend](https://github.com/SkshieldusRookies06/UDT-Used_Device_Trade_Backend)
 > **계약 정본 `SPEC.md`와 제출 문서 `docs/`는 백엔드 리포에 있습니다.** 여기에 복사하지 않습니다.
 
 중고 전자기기 안전거래 플랫폼 UDT의 React 프론트엔드.
@@ -28,8 +29,16 @@ SK Shielders Rookies 6기 웹 팀 프로젝트 (7명 · 2주)
 └── UDT-Used_Device_Trade-frontend/    ← 지금 이 리포
 ```
 
-`npm run gate`와 `npm run mock`이 `../UDT-Used_Device_Trade-backend`를 찾는다.
-다른 곳에 뒀으면 `BACKEND_REPO=<경로> npm run gate`.
+**리포 이름과 폴더 이름이 다르다.** 폴더 이름을 위 그림대로 지정해서 클론한다 —
+문서의 `../UDT-Used_Device_Trade-backend/...` 링크가 그 이름을 전제로 걸려 있다.
+
+```bash
+git clone https://github.com/SkshieldusRookies06/UDT-Used_Device_Trade_Backend.git  UDT-Used_Device_Trade-backend
+git clone https://github.com/SkshieldusRookies06/UDT-Used_Device_Trade_Frontend.git UDT-Used_Device_Trade-frontend
+```
+
+`npm run gate`와 `npm run mock`은 형제 폴더를 훑어 `seams/check-api.mjs`가 있는 곳을 자동으로 찾는다
+(폴더 이름이 달라도 동작한다). 형제 폴더가 아니면 `BACKEND_REPO=<경로> npm run gate`.
 
 ## 무엇을 언제 하나
 
@@ -39,13 +48,19 @@ SK Shielders Rookies 6기 웹 팀 프로젝트 (7명 · 2주)
 | **내 역할만 — 소유 파일 · 내 티켓을 단계별로 어떻게 · 내 함정 · 내 발표** | `onboarding/역할별/FE-*.md` |
 | 지금 잡을 티켓 (수용 기준까지) | [`tasks/README.md`](tasks/README.md) |
 
-아래는 D1 요약이고, D2 이후는 로드맵에 있다.
+### 화면 구성 (10/1 기준 · 전부 `main` 반영 완료)
 
-| 담당 | D1 티켓 |
-|---|---|
-| FE-A | T-011 기동 확인·공용 구조 점검 → T-012 로그인·회원가입 |
-| FE-B | T-013 상품 목록 마감 |
-| FE-C | T-016 마이페이지 4탭 |
+| 화면 | 경로 | 오너 |
+|---|---|---|
+| 상품 목록 (SCR-001) | `/` | FE-B |
+| 상품 상세 (SCR-002) | `/products/:id` | FE-B |
+| 상품 등록 (SCR-003) | `/products/new` | FE-B |
+| 마이페이지 (SCR-004) | `/mypage` | FE-C |
+| 거래 상세 (SCR-005) | `/transactions/:id` | FE-C |
+| 로그인·회원가입 (SCR-006·007) | `/login` · `/signup` | FE-A |
+| 공용 구조·디자인·반응형 | — | FE-A |
+
+남은 일(실서버 전환 · 증빙 캡처 · 2차 통합 · 리허설)은 [`tasks/README.md`](tasks/README.md) 하단에 있다.
 
 **백엔드를 기다리지 않는다** — `npm run mock` 으로 계약대로 응답이 온다.
 
@@ -79,6 +94,7 @@ UDT-Used_Device_Trade-frontend/
 └── src/
     ├── App.jsx               라우트 등록 + errorElement + path="*"       공용 FE-A
     ├── routes.js             경로 문자열은 여기서만 나온다                공용 FE-A
+    ├── assets/               로고 등 정적 파일                          공용 FE-A
     ├── api/                  client(인스턴스·인터셉터) + 리소스별 1파일   공용 FE-A
     ├── store/                authStore · wishStore                      공용 FE-A
     ├── components/           Button · Layout · LoadingSpinner
@@ -131,13 +147,19 @@ main                정본
 
 ---
 
-## 아직 비어 있는 것
+## 남은 것 (코드가 아니다)
 
-| 오너 | 채울 것 |
+**화면은 전부 채워졌고 실서버 게이트·시연 경로도 통과했다**(PR #1~#16 · `npm run gate` 13/13 · 실브라우저 전 구간 · 콘솔 에러 0).
+남은 것은 코드가 아니다.
+
+| 오너 | 남은 것 |
 |---|---|
-| FE-A | 로그인·회원가입 화면 · 반응형 3뷰포트(390·768·1280) 마감 |
-| FE-B | 상품 상세·등록 화면 (이미지 다중 업로드 미리보기) |
-| FE-C | 마이페이지 4탭 · 거래 상세(상태별 액션·분쟁 신고 폼) |
+| 전원 | 2차 통합(D8) — **시연 PC에서** `npm run preview` 빌드물로 시연 경로 ①~⑦ 1회 · 리허설 2회(D10) |
+| 전원 | 제출용 화면 캡처 — 서버 재기동(시드 초기화) → 촬영 → **백엔드 리포 `docs/images/`** (제출 문서는 거기 모인다) |
+| 전원 | 제출 전 이름·GitHub 칸 채우기 (`onboarding/역할별/FE-*.md:3` · `onboarding/frontend.md` 마지막 줄) |
+
+> `seams/smoke.md` 5줄은 **9/30·10/1에 실서버·빌드물로 5/5 통과**했다. D8은 같은 것을 **시연 PC에서** 다시 한다.
+> **`npm run preview`는 4173이다** — 백엔드 CORS에 `http://localhost:4173`이 없으면 빌드물이 API를 못 부른다.
 
 > **`pages/ProductListPage/`가 참고 구현이다** — 네 상태·검색·페이징이 모두 들어 있다.
-> 나머지 화면은 이 구조를 따라 만든다.
+> 새 화면을 추가할 일이 생기면 이 구조를 따른다.
