@@ -1,6 +1,6 @@
 # FE-C — 마이페이지·거래 화면
 
-> 이름: ____________   ·   GitHub: ____________
+> 이름: 이승혁 · GitHub: sheok13
 >
 > **이 한 장이 내 2주 전부다.** 다른 문서는 여기서 필요할 때만 연다.
 > 팀 공통 규칙은 [`../팀원용-한장.md`](../팀원용-한장.md),
@@ -18,6 +18,7 @@
 > git이 "공용 파일을 전부 바꿨다"고 인식해 6개 파일이 충돌한다. 항상 `git merge main`을 쓴다.
 
 > **공통 절차 (전원)**
+>
 > 1. `git checkout main && git pull` → 내 브랜치에서 `git merge main`
 > 2. 아래 표대로 고친다 → `npm run build` 에러 0 → 목 서버(`npm run mock`)로 판정 줄을 직접 눌러 확인 → **내 이름으로 커밋** → PR
 > 3. 남의 파일은 안 건드린다. 필요하면 오너에게 요청
@@ -27,16 +28,16 @@
 **`sheok13` 브랜치(9/22 · T-016 마이페이지)는 지금 빌드가 안 된다** — `npm run build` → `src/App.jsx:23 Unexpected "<<"`. 머지 충돌 표시(`<<<<<<<`)가 **10개 파일**에 그대로 커밋됐다.
 **권장 절차:** main에서 `git checkout -b fe-mypage` 새로 만들고 → `pages/MyPage/`만 다시 옮겨 온다(`git checkout origin/sheok13 -- src/pages/MyPage/` 후 충돌 표시 정리) → 아래 표대로 고친다. `sheok13`은 PR 없이 닫는다.
 
-| 순서 | 파일 | 있었던 것 | 바꿀 것 | 왜 |
-|---|---|---|---|---|
-| 1 | 10개 파일 | `<<<<<<< HEAD` … `>>>>>>> f8370d6` | 위 절차로 **`pages/MyPage/`만** 가져온다. 공용 파일은 main 그대로 | 빌드 실패 · CI 빨강 |
-| 2 | `pages/MyPage/index.jsx` | `.then((res) => setData(res.data))` | `setData(res)` | 인터셉터가 봉투를 벗겨 `data`를 바로 준다 — `res.data`는 `undefined` → 늘 빈 화면 |
-| 3 | 〃 | 거래 탭도 `<ProductCard product={item.product \|\| item} />` | 판매·구매 탭은 **거래 한 줄**: `productTitle` · `amountKrw.toLocaleString()`원 · `<StatusBadge>` · 상대 닉네임(판매 탭이면 `buyerNickname`, 구매 탭이면 `sellerNickname`) · 누르면 `/transactions/{id}` | 거래 객체엔 `title`·`priceKrw`가 없다 → `ProductCard`에서 `priceKrw.toLocaleString()` **예외로 화면이 죽는다**. `ProductCard`는 내 상품·찜 탭에만 |
-| 4 | 〃 | 잔액 표시 없음 | 상단에 `fetchMe()` 결과의 `balanceKrw` 천 단위 | T-016 수용 기준 |
-| 5 | 〃 | 빈 결과 문구 하나 | 탭별 문구("아직 등록한 상품이 없습니다" · "판매 내역이 없습니다" · "구매 내역이 없습니다" · "찜한 상품이 없습니다") | T-016 수용 기준 |
-| 6 | `pages/MyPage/MyPage.module.css` | `.wrapper`만 있음 | 코드가 쓰는 `heading`·`search`(탭 줄)·`grid`·`state`를 정의(색은 토큰만) — `ProductListPage.module.css`를 참고 | 지금은 클래스가 `undefined`라 스타일이 안 먹는다 |
-| 7 | `api/transactions.js` (내 파일) | `disputeFileUrl()`(토큰 없는 URL) · `fetchMyProducts`·`fetchMyWishes` 중복 | **추가하지 않는다** — 다운로드는 main의 `downloadDisputeFile()`, 목록은 `api/products.js`의 것을 import | `<a href>`로는 JWT가 안 실려 401 · 같은 함수 두 벌 |
-| 8 | `client.js` · `App.jsx` · `StatusBadge.jsx` · README · CLAUDE.md · 온보딩 · `seams/smoke.md` | `sheok13`이 수정 | **안 건드린다**(main 그대로) | 공용 파일(FE-A·팀장). 충돌을 내 쪽으로 풀면서 마이페이지 `RequireAuth`·blob 예외가 빠지고 SPEC 밖 `SUSPENDED`가 들어갔다 |
+| 순서 | 파일                                                                                         | 있었던 것                                                                  | 바꿀 것                                                                                                                                                                                                 | 왜                                                                                                                                                |
+| ---- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1    | 10개 파일                                                                                    | `<<<<<<< HEAD` … `>>>>>>> f8370d6`                                         | 위 절차로 **`pages/MyPage/`만** 가져온다. 공용 파일은 main 그대로                                                                                                                                       | 빌드 실패 · CI 빨강                                                                                                                               |
+| 2    | `pages/MyPage/index.jsx`                                                                     | `.then((res) => setData(res.data))`                                        | `setData(res)`                                                                                                                                                                                          | 인터셉터가 봉투를 벗겨 `data`를 바로 준다 — `res.data`는 `undefined` → 늘 빈 화면                                                                 |
+| 3    | 〃                                                                                           | 거래 탭도 `<ProductCard product={item.product \|\| item} />`               | 판매·구매 탭은 **거래 한 줄**: `productTitle` · `amountKrw.toLocaleString()`원 · `<StatusBadge>` · 상대 닉네임(판매 탭이면 `buyerNickname`, 구매 탭이면 `sellerNickname`) · 누르면 `/transactions/{id}` | 거래 객체엔 `title`·`priceKrw`가 없다 → `ProductCard`에서 `priceKrw.toLocaleString()` **예외로 화면이 죽는다**. `ProductCard`는 내 상품·찜 탭에만 |
+| 4    | 〃                                                                                           | 잔액 표시 없음                                                             | 상단에 `fetchMe()` 결과의 `balanceKrw` 천 단위                                                                                                                                                          | T-016 수용 기준                                                                                                                                   |
+| 5    | 〃                                                                                           | 빈 결과 문구 하나                                                          | 탭별 문구("아직 등록한 상품이 없습니다" · "판매 내역이 없습니다" · "구매 내역이 없습니다" · "찜한 상품이 없습니다")                                                                                     | T-016 수용 기준                                                                                                                                   |
+| 6    | `pages/MyPage/MyPage.module.css`                                                             | `.wrapper`만 있음                                                          | 코드가 쓰는 `heading`·`search`(탭 줄)·`grid`·`state`를 정의(색은 토큰만) — `ProductListPage.module.css`를 참고                                                                                          | 지금은 클래스가 `undefined`라 스타일이 안 먹는다                                                                                                  |
+| 7    | `api/transactions.js` (내 파일)                                                              | `disputeFileUrl()`(토큰 없는 URL) · `fetchMyProducts`·`fetchMyWishes` 중복 | **추가하지 않는다** — 다운로드는 main의 `downloadDisputeFile()`, 목록은 `api/products.js`의 것을 import                                                                                                 | `<a href>`로는 JWT가 안 실려 401 · 같은 함수 두 벌                                                                                                |
+| 8    | `client.js` · `App.jsx` · `StatusBadge.jsx` · README · CLAUDE.md · 온보딩 · `seams/smoke.md` | `sheok13`이 수정                                                           | **안 건드린다**(main 그대로)                                                                                                                                                                            | 공용 파일(FE-A·팀장). 충돌을 내 쪽으로 풀면서 마이페이지 `RequireAuth`·blob 예외가 빠지고 SPEC 밖 `SUSPENDED`가 들어갔다                          |
 
 **T-017(거래 상세) 알아 둘 것:** 응답에 `productTitle`·`buyerNickname`·`sellerNickname`, 그리고 **`dispute` 키**(없으면 `null` · 있으면 사유·증빙 파일 목록)가 온다 — 분쟁 행은 이걸로 그린다. 티켓 [배경]에 추가해 뒀다.
 
@@ -55,11 +56,11 @@ BE-D의 상태 머신이 화면으로 드러나는 자리라서, **발표 시연
 
 ### 내가 소유한다 (내가 결정한다)
 
-| 경로 | 화면 |
-|---|---|
-| `src/pages/MyPage/` | SCR-004 마이페이지 4탭 (내 상품 · 판매 · 구매 · 찜) |
-| `src/pages/TransactionDetailPage/` | **SCR-005 거래 상세 — 상태별 액션 · 분쟁 신고** |
-| `src/api/transactions.js` | **거래 API 함수 — FE-C 소유. 함수 추가는 내가 한다** |
+| 경로                               | 화면                                                 |
+| ---------------------------------- | ---------------------------------------------------- |
+| `src/pages/MyPage/`                | SCR-004 마이페이지 4탭 (내 상품 · 판매 · 구매 · 찜)  |
+| `src/pages/TransactionDetailPage/` | **SCR-005 거래 상세 — 상태별 액션 · 분쟁 신고**      |
+| `src/api/transactions.js`          | **거래 API 함수 — FE-C 소유. 함수 추가는 내가 한다** |
 
 ### 절대 안 건드린다
 
@@ -71,10 +72,10 @@ BE-D의 상태 머신이 화면으로 드러나는 자리라서, **발표 시연
 
 ### 공용 — 만지기 전에 채널에 한 줄 올린다
 
-| 파일 | 규칙 |
-|---|---|
-| `components/ProductCard` · `StatusBadge` | FE-A 소유. **마이페이지에서 재사용한다** — 비슷한 카드를 새로 만들지 않는다 |
-| `*.module.css` | D7의 T-020(FE-A 반응형) 동안 내 CSS를 건드리지 않는다. JSX 작업은 계속해도 된다 |
+| 파일                                     | 규칙                                                                            |
+| ---------------------------------------- | ------------------------------------------------------------------------------- |
+| `components/ProductCard` · `StatusBadge` | FE-A 소유. **마이페이지에서 재사용한다** — 비슷한 카드를 새로 만들지 않는다     |
+| `*.module.css`                           | D7의 T-020(FE-A 반응형) 동안 내 CSS를 건드리지 않는다. JSX 작업은 계속해도 된다 |
 
 > 남의 파일이 틀려 보여도 고치지 않는다. **오너에게 보고**한다.
 > 고치면 그 버그의 책임이 나에게 넘어온다.
@@ -83,9 +84,9 @@ BE-D의 상태 머신이 화면으로 드러나는 자리라서, **발표 시연
 
 ## 3. 내 계약 상대
 
-| 나 | 상대 | 무엇에 대해 |
-|---|---|---|
-| **FE-C** | **BE-D** | 거래 **상태별로 어떤 버튼이 보이는가** · 송장 · 구매확정 |
+| 나       | 상대     | 무엇에 대해                                                                                   |
+| -------- | -------- | --------------------------------------------------------------------------------------------- |
+| **FE-C** | **BE-D** | 거래 **상태별로 어떤 버튼이 보이는가** · 송장 · 구매확정                                      |
 | **FE-C** | **BE-A** | 마이페이지 4탭 목록(`/api/me/*` · T-021 D3) · 분쟁 신고 폼 · 증빙 파일 다운로드 (T-010 D5~D6) |
 
 **합의는 `SPEC.md`에 커밋되기 전까지 무효다.**
@@ -99,10 +100,10 @@ BE-D의 상태 머신이 화면으로 드러나는 자리라서, **발표 시연
 
 ## 4. 내 티켓 (순서대로)
 
-| 티켓 | 언제 | 선행 | 끝났다는 증거 |
-|---|---|---|---|
-| [T-016 마이페이지 4탭](../../tasks/T-016-마이페이지.md) | D1~D3 | T-011 | 탭 전환이 URL에 남고 새로고침해도 유지된다 |
-| [T-017 거래 상세](../../tasks/T-017-거래상세.md) | D3~D5 | T-016 | **거래 상태 5종 × 역할 2종에서 버튼이 정확히 맞는다** ★ |
+| 티켓                                                    | 언제  | 선행  | 끝났다는 증거                                           |
+| ------------------------------------------------------- | ----- | ----- | ------------------------------------------------------- |
+| [T-016 마이페이지 4탭](../../tasks/T-016-마이페이지.md) | D1~D3 | T-011 | 탭 전환이 URL에 남고 새로고침해도 유지된다              |
+| [T-017 거래 상세](../../tasks/T-017-거래상세.md)        | D3~D5 | T-016 | **거래 상태 5종 × 역할 2종에서 버튼이 정확히 맞는다** ★ |
 
 > **`[수용 기준]`이 비어 있는 티켓은 시작하지 않는다** — 완료 판정을 말로 하게 된다.
 
@@ -125,18 +126,19 @@ BE-D의 상태 머신이 화면으로 드러나는 자리라서, **발표 시연
 
 ```js
 const [params, setParams] = useSearchParams();
-const tab = params.get("tab") ?? "products";  // products | selling | buying | wishes  ← T-016 수용 기준의 값
+const tab = params.get("tab") ?? "products"; // products | selling | buying | wishes  ← T-016 수용 기준의 값
 ```
+
 > 새로고침해도 탭이 유지되고, "내 거래 탭 링크"를 보낼 수 있다. 규약 F2다.
 
 **3) 탭 4개를 각각 만든다**
 
-| 탭 | 엔드포인트 | 재사용할 것 |
-|---|---|---|
-| 내 상품 (`?tab=products`) | `GET /api/me/products` |
+| 탭                         | 엔드포인트                             | 재사용할 것                                                        |
+| -------------------------- | -------------------------------------- | ------------------------------------------------------------------ |
+| 내 상품 (`?tab=products`)  | `GET /api/me/products`                 |
 | 판매 내역 (`?tab=selling`) | `GET /api/me/transactions?role=seller` | **`ProductCard`** + `StatusBadge`(검수대기/판매중/거래중/거래완료) |
-| 구매 내역 (`?tab=buying`) | `GET /api/me/transactions?role=buyer` | `StatusBadge` — 누르면 `/transactions/:id` 로 |
-| 찜 목록 (`?tab=wishes`) | `GET /api/me/wishes` | **`ProductCard`** |
+| 구매 내역 (`?tab=buying`)  | `GET /api/me/transactions?role=buyer`  | `StatusBadge` — 누르면 `/transactions/:id` 로                      |
+| 찜 목록 (`?tab=wishes`)    | `GET /api/me/wishes`                   | **`ProductCard`**                                                  |
 
 > **비슷한 카드를 새로 만들지 않는다.** `ProductCard`·`StatusBadge`가 이미 있다.
 > 부족하면 FE-A에게 **요청**한다 (`components/`는 FE-A 소유).
@@ -160,18 +162,19 @@ npm run build                          # 에러 0
 
 **0) BE-D에게 표를 먼저 받는다 ← 이게 없으면 시작할 수 없다**
 
-| Transaction 상태 | 구매자 | 판매자 |
-|---|---|---|
-| `PAID` | 분쟁 신고 | 송장 입력 |
-| `SHIPPING` | **구매확정** · 분쟁 신고 | — |
-| `DISPUTED` | — | — (관리자만) |
-| `CONFIRMED` · `REFUNDED` | — | — |
+| Transaction 상태         | 구매자                   | 판매자       |
+| ------------------------ | ------------------------ | ------------ |
+| `PAID`                   | 분쟁 신고                | 송장 입력    |
+| `SHIPPING`               | **구매확정** · 분쟁 신고 | —            |
+| `DISPUTED`               | —                        | — (관리자만) |
+| `CONFIRMED` · `REFUNDED` | —                        | —            |
 
 > D1 회의에서 받는다. 받기 전까지는 T-016을 한다.
 
 **1) 상태 판정을 화면에 흩지 않는다 — 이 화면의 핵심 설계다**
 
 나쁜 예 (조건이 늘어나면 손댈 수 없어진다):
+
 ```
 {txn.status === "SHIPPING" && me.id === txn.buyerId && <button>구매확정</button>}
 {txn.status === "PAID" && me.id === txn.sellerId && <button>송장</button>}
@@ -179,15 +182,19 @@ npm run build                          # 에러 0
 ```
 
 좋은 예 — **한 곳에 모은다**:
+
 ```js
 // pages/TransactionDetailPage/actions.js
-export const isBuyer  = (t, me) => t.buyerId === me.id;
+export const isBuyer = (t, me) => t.buyerId === me.id;
 export const isSeller = (t, me) => t.sellerId === me.id;
 
-export const canConfirm           = (t, me) => isBuyer(t, me)  && t.status === "SHIPPING";
-export const canRegisterShipping  = (t, me) => isSeller(t, me) && t.status === "PAID";
-export const canOpenDispute       = (t, me) => isBuyer(t, me)  && ["PAID", "SHIPPING"].includes(t.status);
+export const canConfirm = (t, me) => isBuyer(t, me) && t.status === "SHIPPING";
+export const canRegisterShipping = (t, me) =>
+  isSeller(t, me) && t.status === "PAID";
+export const canOpenDispute = (t, me) =>
+  isBuyer(t, me) && ["PAID", "SHIPPING"].includes(t.status);
 ```
+
 > **표가 바뀌면 이 파일 하나만 고친다.** JSX는 `canConfirm(txn, me) && <Button/>` 만 쓴다.
 
 **2) 상태 × 역할을 **둘 다** 본다**
@@ -202,6 +209,7 @@ export const canOpenDispute       = (t, me) => isBuyer(t, me)  && ["PAID", "SHIP
 송장 입력  PATCH /api/transactions/{id}/shipping  { courier, trackingNo }
 분쟁 신고  POST  /api/transactions/{id}/disputes  (multipart: 사유 + 증빙 파일)
 ```
+
 > **성공 응답을 화면에 반영한다.** 서버가 새 상태를 돌려주니 그걸로 다시 그린다.
 > 낙관적으로 미리 바꾸지 않는다 — 상태 전이는 서버가 거절할 수 있다.
 
@@ -255,12 +263,12 @@ D10    리허설 2회
 
 ## 7. 내가 쓰는 문서
 
-| 문서 | 언제 | 내 몫 |
-|---|---|---|
-| `docs/04-화면설계서.md` SCR-004·005 | D3 | 내 화면 절 (문서 오너는 FE-A) |
-| `docs/05-React…설계서.md` 내 컴포넌트 | D8 | 내 화면의 Props 표 |
-| `docs/images/` 내 화면 캡처 | D8 | **상태별로 여러 장** — 거래중·배송중·분쟁·완료 |
-| `docs/회고록/retro-<이름>.md` | D9 오전 | 전원 공통 |
+| 문서                                  | 언제    | 내 몫                                          |
+| ------------------------------------- | ------- | ---------------------------------------------- |
+| `docs/04-화면설계서.md` SCR-004·005   | D3      | 내 화면 절 (문서 오너는 FE-A)                  |
+| `docs/05-React…설계서.md` 내 컴포넌트 | D8      | 내 화면의 Props 표                             |
+| `docs/images/` 내 화면 캡처           | D8      | **상태별로 여러 장** — 거래중·배송중·분쟁·완료 |
+| `docs/회고록/retro-<이름>.md`         | D9 오전 | 전원 공통                                      |
 
 > 문서는 백엔드 리포 `docs/`에 쓴다 — 프론트 리포에 복사하지 않는다.
 
@@ -295,15 +303,15 @@ grep -rnE "#[0-9a-fA-F]{3,6}" src/pages/MyPage/*.module.css src/pages/Transactio
 
 ## 9. 내가 막힐 곳 (내 역할 고유)
 
-| 증상 | 원인 | 볼 곳 |
-|---|---|---|
-| 탭이 새로고침하면 초기화된다 | `useState`로만 뒀다 | **URL이 정본** — `useSearchParams` (규약 F2) |
-| 상태 판정 `if`가 화면 여기저기 흩어진다 | 조건이 늘어나면 손댈 수 없어진다 | **한 함수에 모은다** — `canConfirm(txn, me)` · `canRegisterShipping(txn, me)` |
-| 구매자에게 판매자 버튼이 보인다 | 역할 판정이 빠졌다 | 상태 **× 역할** 둘 다 본다. BE-D의 표가 정본 |
-| 분쟁 신고 후 화면이 그대로 | 응답을 반영 안 했다 | 응답의 새 상태로 다시 그린다 |
-| 증빙 파일이 다운로드가 안 된다 | 권한 — 당사자·관리자만 | BE-D에게 확인 |
-| 빈 탭에 에러 화면이 뜬다 | 빈 목록을 에러로 처리했다 | **빈 결과는 에러가 아니다** |
-| 비슷한 카드를 새로 만들고 있다 | `ProductCard`·`StatusBadge`가 있다 | 재사용. 부족하면 FE-A에게 요청 |
+| 증상                                    | 원인                               | 볼 곳                                                                         |
+| --------------------------------------- | ---------------------------------- | ----------------------------------------------------------------------------- |
+| 탭이 새로고침하면 초기화된다            | `useState`로만 뒀다                | **URL이 정본** — `useSearchParams` (규약 F2)                                  |
+| 상태 판정 `if`가 화면 여기저기 흩어진다 | 조건이 늘어나면 손댈 수 없어진다   | **한 함수에 모은다** — `canConfirm(txn, me)` · `canRegisterShipping(txn, me)` |
+| 구매자에게 판매자 버튼이 보인다         | 역할 판정이 빠졌다                 | 상태 **× 역할** 둘 다 본다. BE-D의 표가 정본                                  |
+| 분쟁 신고 후 화면이 그대로              | 응답을 반영 안 했다                | 응답의 새 상태로 다시 그린다                                                  |
+| 증빙 파일이 다운로드가 안 된다          | 권한 — 당사자·관리자만             | BE-D에게 확인                                                                 |
+| 빈 탭에 에러 화면이 뜬다                | 빈 목록을 에러로 처리했다          | **빈 결과는 에러가 아니다**                                                   |
+| 비슷한 카드를 새로 만들고 있다          | `ProductCard`·`StatusBadge`가 있다 | 재사용. 부족하면 FE-A에게 요청                                                |
 
 ---
 
