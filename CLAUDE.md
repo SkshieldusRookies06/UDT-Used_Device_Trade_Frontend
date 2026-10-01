@@ -9,6 +9,11 @@
 ## 강제 규약
 - 서버 통신은 `src/api/`에서만. 컴포넌트에서 `axios`/`fetch` 직접 호출 금지
 - 응답 봉투는 인터셉터가 한 곳에서 벗긴다(`res.data.data`) — 화면은 알맹이만 본다
+- 에러는 인터셉터가 `{code, message, fields, status}`로 정규화한다.
+  **`fields`는 SPEC의 `null` 대신 항상 배열**이므로 검증 에러 판정은 `fields.length`로 한다
+  (`Array.isArray(err.fields)`는 항상 참이라 분기가 안 걸린다)
+- **응답 필드는 SPEC §4에서 확인한다.** Entity 설계서의 컬럼(`rejectReason` 등)은
+  API 응답에 없을 수 있다 — 없는 필드를 읽으면 화면에 틀린 값이 조용히 나온다
 - 검색어·카테고리·페이지는 **URL 쿼리**. Zustand는 `authStore`·`wishStore` 두 개만
 - 경로 문자열은 `src/routes.js` 상수에서만 나온다
 - 색·간격은 `styles/tokens.css`의 `var(--...)`만. 전역 CSS는 `styles/` 두 파일뿐

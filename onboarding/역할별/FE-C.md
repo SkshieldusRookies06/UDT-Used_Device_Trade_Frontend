@@ -8,7 +8,14 @@
 
 ---
 
-## 0. [9/27 개정] 연휴 뒤 첫날 내가 할 것 — FE-C · **가장 먼저**
+## 0. [9/27 개정 · **완료(9/30)**] 연휴 뒤 첫날 내가 할 것 — FE-C
+
+> **이 절은 끝났다. 기록으로만 남긴다 — 지금 다시 하지 않는다.**
+> T-016·T-017 모두 `main` 머지 완료(PR #4·#8·#10). 아래에 적힌 충돌 마커 문제도 해소됐다.
+> 오늘 할 일은 [`../../tasks/README.md`](../../tasks/README.md) 현황 표를 본다.
+>
+> **여기서 배운 것(회고록 재료):** `git merge` 대신 파일을 복사해 최신 코드를 가져오면
+> git이 "공용 파일을 전부 바꿨다"고 인식해 6개 파일이 충돌한다. 항상 `git merge main`을 쓴다.
 
 > **공통 절차 (전원)**
 > 1. `git checkout main && git pull` → 내 브랜치에서 `git merge main`
@@ -273,7 +280,7 @@ npm run mock         # 목 서버 8080
 
 # 내 완료 증명
 npm run build        # 에러 0
-npm run gate         # 13/13 ok (목 서버 기준 · 실서버는 BE-B T-005 전 8/13이 정상)
+npm run gate         # 13/13 ok (목 서버·실서버 모두 13/13 · 9/30 확인)
 
 # 규약 확인 — 무출력이 정상
 grep -rn "axios" src/pages/MyPage src/pages/TransactionDetailPage
