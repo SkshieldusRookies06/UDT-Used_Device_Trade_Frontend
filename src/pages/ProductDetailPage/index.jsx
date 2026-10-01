@@ -104,7 +104,7 @@ export default function ProductDetailPage() {
 
     // 구매 의사 확인 팝업 추가
     const isConfirmed = window.confirm(
-      "해당 상품을 정말로 구매하시겠습니까?\n결제 후에는 가상 에스크로에 금액이 안전하게 보관됩니다."
+      "해당 상품을 정말로 구구국.ㄱ.국.구.구매 하시겠습니까? \n💸정말로? 진짜죠????💸"
     );
     
     // 취소를 누르면 로직 중단
