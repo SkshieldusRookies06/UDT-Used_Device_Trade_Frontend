@@ -96,10 +96,22 @@ export default function ProductDetailPage() {
   };
 
   const handlePurchase = async () => {
+    // 로그인 확인
     if (!accessToken) {
       navigate(ROUTES.LOGIN, { state: { from: `/products/${id}` } });
       return;
     }
+
+    // 구매 의사 확인 팝업 추가
+    const isConfirmed = window.confirm(
+      "해당 상품을 정말로 구매하시겠습니까?\n결제 후에는 가상 에스크로에 금액이 안전하게 보관됩니다."
+    );
+    
+    // 취소를 누르면 로직 중단
+    if (!isConfirmed) {
+      return;
+    }
+
     if (purchasing) return;
     setPurchasing(true);
     setPurchaseError("");
@@ -159,7 +171,6 @@ export default function ProductDetailPage() {
     images = [],
     description,
   } = product;
-
 
   const getImageUrl = (img) => {
     if (!img) return null;
