@@ -309,7 +309,7 @@ export default function MyPage() {
           </div>
         </div>
         <div className={styles.balanceBox}>
-          <div className={styles.balanceLabel}>가상 잔액 balanceKrw</div>
+          <div className={styles.balanceLabel}>가상 잔액</div>
           <div className={styles.balanceAmount}>
             {(user?.balanceKrw ?? 0).toLocaleString()} 원
           </div>
